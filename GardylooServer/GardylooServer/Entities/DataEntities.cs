@@ -5,19 +5,6 @@ using System.Threading.Tasks;
 
 namespace GardylooServer.Entities
 {
-	public enum GameStatusEnum
-	{
-		gamesteup,
-		gameinitalizing,
-		waitingtostart,
-		gamestart,
-		leaderprompt,
-		playeranswere,
-		leaderanswere,
-		gamepoint,
-		gamevictory,
-		gamefinish
-	}	
 
 	public class GameSoundObject
 	{

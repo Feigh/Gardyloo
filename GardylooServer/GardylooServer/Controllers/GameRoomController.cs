@@ -32,17 +32,5 @@ namespace GardylooServer.Controllers
 		public void Post([FromBody] string value)
 		{
 		}
-
-		// PUT api/<GameRoom>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
-
-		// DELETE api/<GameRoom>/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-		}
 	}
 }

@@ -31,4 +31,5 @@ namespace GardylooServer.Entities
 		Guid TagId;
 		string TagText;
 	}
+
 }

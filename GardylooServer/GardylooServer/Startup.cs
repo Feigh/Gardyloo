@@ -1,3 +1,5 @@
+using GardylooServer.Entities;
+using GardylooServer.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +40,9 @@ namespace GardylooServer
 								  });
 			});
 			services.AddSignalR();
+
+			services.AddSingleton<IRoomHandler<Room>, RoomHandler>();
+			services.AddSingleton<ISettingsHandler, SettingsHandler>();
 			services.AddControllers()
 				.AddJsonOptions(options =>
 				 {

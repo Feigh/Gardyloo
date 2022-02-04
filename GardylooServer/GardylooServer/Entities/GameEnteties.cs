@@ -11,7 +11,7 @@ namespace GardylooServer.Entities
 
 	public enum GameStatusEnum
 	{
-		gamesteup,
+		gamesetup,
 		gameinitalizing,
 		waitingtostart,
 		gamestart,
@@ -25,18 +25,57 @@ namespace GardylooServer.Entities
 
 	public class Room
 	{
-		Guid id;
-		string Name;
-		string Settings;
-		GameStatusEnum state;
-		IEnumerable<Player> PlayerList;
+		public Guid id;
+		public Guid settingsId;
+		public string Name;
+		public string Settings;
+		public GameStatusEnum state;
+		public IEnumerable<Player> PlayerList;
+
+		public Room(string name, string settings)
+		{
+			this.id = Guid.NewGuid();
+			this.Name = name;
+			this.Settings = settings;
+			this.state = GameStatusEnum.gamesetup;
+			this.PlayerList = new List<Player>();
+		}
 	}
 
 	public class Player
 	{
-		Guid id;
-		string name;
-		bool leader;
+		public Guid id;
+		public string name;
+		public bool leader;
+
+		public Player(string name, bool leader)
+		{
+			this.id = Guid.NewGuid();
+			this.name = name;
+			this.leader = leader;
+		}
+	}
+
+	public class GameSettings
+	{
+		public Guid id;
+		public int GoalPoint;
+		public int MaxPlayers;
+		public int MinPlayers;
+		public double TimeLimit;
+		public IList<GameTagsObject> SelectedTags;
+		public IList<GameTagsObject> ExcludedTags;
+
+		public GameSettings()
+		{
+			this.id = Guid.NewGuid();
+			GoalPoint = 0;
+			MaxPlayers = 0;
+			MinPlayers = 0;
+			TimeLimit = 0;
+			SelectedTags = new List<GameTagsObject>();
+			ExcludedTags = new List<GameTagsObject>();
+		}
 	}
 
 }

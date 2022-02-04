@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GardylooServer.Handlers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,14 @@ namespace GardylooServer.Controllers
 	public class GameStateController : ControllerBase
 	{
 		private readonly ILogger<GameStateController> _logger;
+		private readonly GameHandler _gameHandler;
+
+		public GameStateController(ILogger<GameStateController> logger, GameHandler gameHandler)
+		{
+			_logger = logger;
+			_gameHandler = gameHandler;
+		}
+
 		// GET: api/<StateController>
 		[HttpGet]
 		public IEnumerable<string> Get()

@@ -1,0 +1,16 @@
+{
+	"gamesettings": {
+		"id": "0",
+		"goalpoint": 3,
+		"maxplayers": 6,
+		"minplayers": 2,
+		"timelimit": 120,
+		"selectedtags": [],
+		"excludedtags": [
+			{
+				"id": "0000-0000-0000-0000",
+				"name": "political"
+			}
+		]
+	}
+}

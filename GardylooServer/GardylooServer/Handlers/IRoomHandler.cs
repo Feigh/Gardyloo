@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GardylooServer.Handlers
 {
-	public interface IRoomHandler<T>
+	public interface IRoomHandler<T> where T : class
 	{
 		public IList<T> RoomList { get; }
 

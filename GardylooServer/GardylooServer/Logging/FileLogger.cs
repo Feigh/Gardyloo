@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +10,14 @@ namespace GardylooServer.Logging
 {
     public class FileLoggerProvider : ILoggerProvider
     {
-        private readonly FileLogger _logger = new FileLogger();
+        private readonly FileLogger _logger;
 
-        public ILogger CreateLogger(string categoryName)
+		public FileLoggerProvider(string config)
+		{
+            _logger = new FileLogger(config);
+		}
+
+		public ILogger CreateLogger(string categoryName)
         {
             return _logger;
         }
@@ -22,18 +28,18 @@ namespace GardylooServer.Logging
     }
     public class FileLogger : ILogger
 	{
-        private string _filePath;
         private string _fileName;
         private static readonly Object obj = new Object();
+		public string FilePath { get; set; }
 
-        public FileLogger()
+		public FileLogger(string config)
         {
 
-            _filePath = "C:/temp/log/";
+            FilePath = String.IsNullOrEmpty(config) ? "C:/temp/log/": config;
             _fileName = string.Format("logFil_{0}.log", DateTime.Today.ToString("yyyyMMdd"));
             lock (obj)
             {
-                File.AppendAllText(_filePath + _fileName, "Start logging \n");
+                File.AppendAllText(FilePath + _fileName, "Start logging \n");
             }
         }
 
@@ -64,7 +70,7 @@ namespace GardylooServer.Logging
         {
             if (!IsEnabled(logLevel)) return;
 
-            string fileToWrite = _filePath + _fileName;
+            string fileToWrite = FilePath + _fileName;
             lock (obj)
             {
                 string message = string.Format("Level:{0} message: {1} event:{2} \n", logLevel.ToString(), state.ToString(), eventId.ToString());

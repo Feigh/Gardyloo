@@ -1,0 +1,14 @@
+{
+	"id": "33574ed3-72db-4b4c-bd91-b2a84ba38213",
+	"goalpoint": 3,
+	"maxplayers": 6,
+	"minplayers": 2,
+	"timelimit": 120,
+	"selectedtags": [],
+	"excludedtags": [
+		{
+			"id": "c3c1f3bb-5ccc-4242-9a76-902d2bc711fa",
+			"name": "political"
+		}
+	]
+}

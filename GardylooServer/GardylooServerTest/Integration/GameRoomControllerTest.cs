@@ -2,6 +2,7 @@
 using GardylooServer.Controllers;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
+using GardylooServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -28,9 +29,6 @@ namespace GardylooServerTest.Integration
 
 			var mockset = new Mock<GameSettings>();
 
-			//var mockhandlr = new Mock<IRoomHandler<Room>>();
-			//mockhandlr.Setup(x => x.AddRoom(It.IsAny<string>(), mockset.Object)).Returns(new Room("AAAA", new GameSettings()));
-
 			var mockhandlrLog = new Mock<ILogger<RoomHandler>>();
 			mockhandlrLog.Setup(x => x.Log<It.IsAnyType>(
 				It.IsAny<LogLevel>(),
@@ -40,9 +38,12 @@ namespace GardylooServerTest.Integration
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 			_handler = new RoomHandler(mockhandlrLog.Object);
 
+			var mocksetting = new Mock<IDataReader<GameSettings>>();
+			mocksetting.Setup(x => x.GetItem(It.IsAny<string>())).Returns(new GameSettings() { id=Guid.NewGuid() });
+
 			var mockmap = new Mock<IMapper>();
 
-			_sut = new GameRoomController(mockLog.Object, _handler, mockmap.Object);
+			_sut = new GameRoomController(mockLog.Object, _handler, mocksetting.Object, mockmap.Object);
 		}
 		[Fact]
 		public void Task_Get_GenereateARoomWithRandomNameAndRedturnThatName()
@@ -60,6 +61,25 @@ namespace GardylooServerTest.Integration
 			Assert.True(result3.Name.Length == 4);
 			Assert.Matches("\\w{4}", result3.Name);
 
+			Assert.NotNull(result3.Settings);
+		}
+		[Fact]
+		public void Task_Get_ReturnTheRoomAtTheId()
+		{
+			var newroom = _sut.Get(); // CreateRoom
+
+			var newroom2 = (JsonResult)newroom;
+			var newroom3 = (Room)newroom2.Value;
+
+			var result = _sut.Get(newroom3.Name); // CreateRoom
+
+			Assert.NotNull(result);
+			Assert.IsType<JsonResult>(result);
+
+			var result2 = (JsonResult)result;
+			var result3 = (Room)result2.Value;
+
+			Assert.True(result3.Name == newroom3.Name);
 			Assert.NotNull(result3.Settings);
 		}
 	}

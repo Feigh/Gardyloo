@@ -19,8 +19,10 @@ namespace GardylooServer
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
-				.ConfigureLogging(logging => { logging.AddDebug();
-					logging.AddProvider(new FileLoggerProvider()); })
+				.ConfigureLogging((hostBuilderContext,logging) => { 
+					logging.AddDebug();					;
+					logging.AddProvider(new FileLoggerProvider(hostBuilderContext.Configuration.GetSection("ConnectionStrings").GetSection("LogPath").Value)); 
+				})
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();

@@ -1,6 +1,8 @@
 using AutoMapper;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
+using GardylooServer.Logging;
+using GardylooServer.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -51,7 +53,10 @@ namespace GardylooServer
 			IMapper mapper = mapperConfig.CreateMapper();
 			services.AddSingleton(mapper);
 
+			services.AddScoped(typeof(IDataReader<>), typeof(JsonDataReader<>));
+			//services.AddScoped<IDataReader<Room>, JsonDataReader<Room>>();
 			services.AddSingleton<IRoomHandler<Room>, RoomHandler>();
+
 			services.AddControllers()
 				.AddJsonOptions(options =>
 				 {
@@ -63,7 +68,7 @@ namespace GardylooServer
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
 		{
 			if (env.IsDevelopment())
 			{
@@ -77,7 +82,6 @@ namespace GardylooServer
 				options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 				options.RoutePrefix = string.Empty;
 			});
-
 
 			app.UseHttpsRedirection();
 

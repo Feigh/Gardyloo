@@ -1,24 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace GardylooServer.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class RoomSettingsController : ControllerBase
+	public class GameTagController : ControllerBase
 	{
-		private readonly ILogger<RoomSettingsController> _logger;
+		private readonly ILogger<GameTagController> _logger;
 		// GET: api/<RoomSettingsController>
 
 		// GET api/<RoomSettingsController>/5
-		[HttpGet("{roomname}")]
-		public string Get(int id)
+		[HttpGet("{id}")]
+		public string Get(string id)
 		{
 			// få settings för valt rum
 			return "value";

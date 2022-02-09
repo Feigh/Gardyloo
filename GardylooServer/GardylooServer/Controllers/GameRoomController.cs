@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
+using GardylooServer.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -18,15 +19,14 @@ namespace GardylooServer.Controllers
 	{
 		private readonly ILogger<GameRoomController> _logger;
 		private readonly IRoomHandler<Room> _roomHandler;
-		//private readonly IDataLoaderHandler<GameSettings,> _dataHandler
-		//private readonly ISettingsHandler _settingsHandler;
+		private readonly IDataReader<GameSettings> _dataHandler;
 		private readonly IMapper _mapper;
 
-		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, IMapper mapper)
+		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, IDataReader<GameSettings> settings, IMapper mapper)
 		{
 			_logger = logger;
 			_roomHandler = handler;
-			//_settingsHandler = shandler;
+			_dataHandler = settings;
 			_mapper = mapper;
 		}
 
@@ -35,7 +35,7 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), null));
+				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _dataHandler.GetItem("")));
 			}
 			catch (Exception ex)
 			{
@@ -50,7 +50,7 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				return BadRequest($"Failed Finding the Requested Room {roomname}");
+				return new JsonResult(_roomHandler.RoomList.Where(x => x.Name==roomname).FirstOrDefault());
 			}
 			catch(Exception ex)
 			{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GardylooServer.Handlers
+namespace GardylooServer.Repository
 {
 	public interface IDataLoaderHandler<T, Strm>
 	{

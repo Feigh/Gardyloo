@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,28 +9,49 @@ namespace GardylooServer.Entities
 
 	public class GameSoundObject
 	{
-		Guid Id;
-		string Title;
-		string UnderTitle;
-		string FileName;
-		string Path;
-		string Creator;
-		IEnumerable<GameTagsObject> Tags;
+		public Guid Id;
+		public string Title;
+		public string UnderTitle;
+		public string FileName;
+		public string Path;
+		public string Creator;
+		public IEnumerable<GameTagsObject> Tags;
 	}
 
 	public class GamePrompsObject
 	{
-		Guid Id;
-		string Text;
-		string Creator;
-		IEnumerable<GameTagsObject> Tags;
+		public Guid Id;
+		public string Text;
+		public string Creator;
+		public IEnumerable<GameTagsObject> Tags;
 	}
 
 
 	public class GameTagsObject
 	{
-		Guid TagId;
-		string TagText;
+		[JsonProperty("id")]
+		public Guid TagId;
+		[JsonProperty("name")]
+		public string TagText;
+	}
+
+	public class GameSettingsObject
+	{
+		[JsonProperty("id")]
+		public Guid id { get; set; }
+		[JsonProperty("goalpoint")]
+		public int GoalPoint { get; set; }
+		[JsonProperty("maxplayers")]
+		public int MaxPlayers { get; set; }
+		[JsonProperty("minplayers")]
+		public int MinPlayers { get; set; }
+		[JsonProperty("timelimit")]
+		public double TimeLimit { get; set; }
+		[JsonProperty("selectedtags")]
+		public IList<GameTagsObject> SelectedTags { get; set; }
+		[JsonProperty("excludedtags")]
+		public IList<GameTagsObject> ExcludedTags { get; set; }
+
 	}
 
 }

@@ -1,4 +1,5 @@
-﻿using GardylooServer.Entities;
+﻿using AutoMapper;
+using GardylooServer.Entities;
 using GardylooServer.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,13 +18,16 @@ namespace GardylooServer.Controllers
 	{
 		private readonly ILogger<GameRoomController> _logger;
 		private readonly IRoomHandler<Room> _roomHandler;
-		private readonly ISettingsHandler _settingsHandler;
+		//private readonly IDataLoaderHandler<GameSettings,> _dataHandler
+		//private readonly ISettingsHandler _settingsHandler;
+		private readonly IMapper _mapper;
 
-		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, ISettingsHandler shandler)
+		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, IMapper mapper)
 		{
 			_logger = logger;
 			_roomHandler = handler;
-			_settingsHandler = shandler;
+			//_settingsHandler = shandler;
+			_mapper = mapper;
 		}
 
 		[HttpGet()]
@@ -31,11 +35,7 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				// Jag vet att jag ska skapa ett nytt rum
-				// Jag anropar settingshandler skapa nyt setting och får ett settingsobject tillbka
-				// detta lägger jag in i roomhandler som nytt rum
-				// jag får tillbaka ett rum och jag skickar tillbaka ID eller nått mer
-				return BadRequest("Failed Creating a new Room");
+				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), null));
 			}
 			catch (Exception ex)
 			{

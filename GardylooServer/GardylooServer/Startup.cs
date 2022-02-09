@@ -1,3 +1,4 @@
+using AutoMapper;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
 using Microsoft.AspNetCore.Builder;
@@ -41,8 +42,16 @@ namespace GardylooServer
 			});
 			services.AddSignalR();
 
+			var mapperConfig = new MapperConfiguration(mc =>
+			{
+				mc.AddProfile(new MappingProfile());
+			});
+
+			services.AddSingleton<IConfiguration>(Configuration);
+			IMapper mapper = mapperConfig.CreateMapper();
+			services.AddSingleton(mapper);
+
 			services.AddSingleton<IRoomHandler<Room>, RoomHandler>();
-			services.AddSingleton<ISettingsHandler, SettingsHandler>();
 			services.AddControllers()
 				.AddJsonOptions(options =>
 				 {

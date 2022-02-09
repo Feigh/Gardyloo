@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GardylooServer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,6 @@ namespace GardylooServer.Handlers
 
 		public string GenerateRoomName();
 
-		public T AddRoom(string name, ISettingsHandler settings);
+		public T AddRoom(string name, GameSettings settings);
 	}
 }

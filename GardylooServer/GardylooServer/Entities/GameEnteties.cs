@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,13 +27,12 @@ namespace GardylooServer.Entities
 	public class Room
 	{
 		public Guid id;
-		public Guid settingsId;
 		public string Name;
-		public string Settings;
+		public GameSettings Settings { get; set; }
 		public GameStatusEnum state;
 		public IEnumerable<Player> PlayerList;
 
-		public Room(string name, string settings)
+		public Room(string name, GameSettings settings)
 		{
 			this.id = Guid.NewGuid();
 			this.Name = name;
@@ -58,13 +58,13 @@ namespace GardylooServer.Entities
 
 	public class GameSettings
 	{
-		public Guid id;
-		public int GoalPoint;
-		public int MaxPlayers;
-		public int MinPlayers;
-		public double TimeLimit;
-		public IList<GameTagsObject> SelectedTags;
-		public IList<GameTagsObject> ExcludedTags;
+		public Guid id { get; set; }
+		public int GoalPoint { get; set; }
+		public int MaxPlayers { get; set; }
+		public int MinPlayers { get; set; }
+		public double TimeLimit { get; set; }
+		public IList<GameTagsObject> SelectedTags { get; set; }
+		public IList<GameTagsObject> ExcludedTags { get; set; }
 
 		public GameSettings()
 		{

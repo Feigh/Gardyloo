@@ -1,6 +1,6 @@
 {
-	"gamesettings": {
-		"id": "0",
+	"gamesettingsobject": {
+		"id": "33574ed3-72db-4b4c-bd91-b2a84ba38213",
 		"goalpoint": 3,
 		"maxplayers": 6,
 		"minplayers": 2,
@@ -8,7 +8,7 @@
 		"selectedtags": [],
 		"excludedtags": [
 			{
-				"id": "0000-0000-0000-0000",
+				"tagid": "0000-0000-0000-0000",
 				"name": "political"
 			}
 		]

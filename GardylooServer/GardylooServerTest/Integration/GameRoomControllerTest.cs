@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GardylooServer;
 using GardylooServer.Controllers;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
@@ -27,8 +28,6 @@ namespace GardylooServerTest.Integration
 				It.IsAny<Exception>(),
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 
-			var mockset = new Mock<GameSettings>();
-
 			var mockhandlrLog = new Mock<ILogger<RoomHandler>>();
 			mockhandlrLog.Setup(x => x.Log<It.IsAnyType>(
 				It.IsAny<LogLevel>(),
@@ -38,12 +37,17 @@ namespace GardylooServerTest.Integration
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 			_handler = new RoomHandler(mockhandlrLog.Object);
 
-			var mocksetting = new Mock<IDataReader<GameSettings>>();
-			mocksetting.Setup(x => x.GetItem(It.IsAny<string>())).Returns(new GameSettings() { id=Guid.NewGuid() });
+			var mocksetting = new Mock<IDataReader<GameSettingsObject>>();
+			mocksetting.Setup(x => x.GetItem(It.IsAny<string>())).Returns(new GameSettingsObject() { id= "8ba26130-be33-4cf6-9591-0b0cc3d26cde" });
 
-			var mockmap = new Mock<IMapper>();
+			//auto mapper configuration
+				var mockMapper = new MapperConfiguration(cfg =>
+			{
+				cfg.AddProfile(new AutoMapperProfile());
+			});
+			var mapper = mockMapper.CreateMapper();
 
-			_sut = new GameRoomController(mockLog.Object, _handler, mocksetting.Object, mockmap.Object);
+			_sut = new GameRoomController(mockLog.Object, _handler, mocksetting.Object, mapper);
 		}
 		[Fact]
 		public void Task_Get_GenereateARoomWithRandomNameAndRedturnThatName()

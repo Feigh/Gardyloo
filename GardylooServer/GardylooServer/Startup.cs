@@ -1,6 +1,7 @@
 using AutoMapper;
 using GardylooServer.Entities;
 using GardylooServer.Handlers;
+using GardylooServer.Hubs;
 using GardylooServer.Logging;
 using GardylooServer.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -37,8 +38,10 @@ namespace GardylooServer
 				options.AddPolicy(name: MyAllowSpecificOrigins,
 								  builder =>
 								  {
-									  builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-										.WithOrigins("http://localhost:19077")
+									  builder.AllowAnyOrigin()
+										.AllowAnyMethod()
+										.AllowAnyHeader()
+										.WithOrigins("http://localhost:3000")
 										.AllowCredentials();
 								  });
 			});
@@ -46,7 +49,7 @@ namespace GardylooServer
 
 			var mapperConfig = new MapperConfiguration(mc =>
 			{
-				mc.AddProfile(new MappingProfile());
+				mc.AddProfile(new AutoMapperProfile());
 			});
 
 			services.AddSingleton<IConfiguration>(Configuration);
@@ -56,6 +59,7 @@ namespace GardylooServer
 			services.AddScoped(typeof(IDataReader<>), typeof(JsonDataReader<>));
 			//services.AddScoped<IDataReader<Room>, JsonDataReader<Room>>();
 			services.AddSingleton<IRoomHandler<Room>, RoomHandler>();
+			services.AddSingleton<IGameHandler, GameHandler>();
 
 			services.AddControllers()
 				.AddJsonOptions(options =>
@@ -102,11 +106,13 @@ namespace GardylooServer
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-	//			endpoints.MapControllerRoute(
-	//name: "default",
-	//pattern: "{controller}/{action=Index}/{id?}");
-	//			endpoints.MapHub<StateHub>("/hubs/state");
-	//			endpoints.MapHub<PlayerHub>("/hubs/player");
+				//endpoints.MapHub<GameStateHub>("/statehub");
+				endpoints.MapHub<PlayersStateHub>("/playerhub");//.RequireCors(MyAllowSpecificOrigins);
+				//			endpoints.MapControllerRoute(
+				//name: "default",
+				//pattern: "{controller}/{action=Index}/{id?}");
+				//			endpoints.MapHub<StateHub>("/hubs/state");
+				//			endpoints.MapHub<PlayerHub>("/hubs/player");
 			});
 		}
 	}

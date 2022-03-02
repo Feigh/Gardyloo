@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using GardylooServer.Entities;
+using GardylooServer.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,33 +16,58 @@ namespace GardylooServer.Controllers
 	public class GameTagController : ControllerBase
 	{
 		private readonly ILogger<GameTagController> _logger;
-		// GET: api/<RoomSettingsController>
+		private readonly IDataReader<GameTagsObject> _dataHandler;
+		private readonly IMapper _mapper;
 
-		// GET api/<RoomSettingsController>/5
-		[HttpGet("{id}")]
-		public string Get(string id)
+		public GameTagController(ILogger<GameTagController> logger, IDataReader<GameTagsObject> dataHandler, IMapper mapper)
 		{
-			// få settings för valt rum
-			return "value";
+			_logger = logger;
+			_dataHandler = dataHandler;
+			_mapper = mapper;
+		}
+
+		[HttpGet()]
+		public IActionResult Get()
+		{
+			try
+			{
+				return new JsonResult(_mapper.Map<IList<GameTag>>(_dataHandler.GetAllItem().ToList()));
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex.Message);
+				return BadRequest("Failed Creating a new Room");
+			}
+		}
+
+
+		[HttpGet("{id}")]
+		public IActionResult Get(string id)
+		{
+			try
+			{
+				return new JsonResult(_mapper.Map<GameTag>(_dataHandler.GetAllItem().Where(x => x.Id==id).FirstOrDefault()));
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex.Message);
+				return BadRequest("Failed Creating a new Room");
+			}
 		}
 
 		// POST api/<RoomSettingsController>
 		[HttpPost]
 		public void Post([FromBody] string value)
 		{
-			//uppdatera settings för valt rum 
+			throw new NotImplementedException();
 		}
 
-		// PUT api/<RoomSettingsController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
-		{
-		}
 
 		// DELETE api/<RoomSettingsController>/5
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
+			throw new NotImplementedException();
 		}
 	}
 }

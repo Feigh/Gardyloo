@@ -9,7 +9,7 @@ namespace GardylooServer.Entities
 
 	public class GameSoundObject
 	{
-		public Guid Id;
+		public string Id;
 		public string Title;
 		public string UnderTitle;
 		public string FileName;
@@ -20,7 +20,7 @@ namespace GardylooServer.Entities
 
 	public class GamePrompsObject
 	{
-		public Guid Id;
+		public string Id;
 		public string Text;
 		public string Creator;
 		public IEnumerable<GameTagsObject> Tags;
@@ -30,15 +30,15 @@ namespace GardylooServer.Entities
 	public class GameTagsObject
 	{
 		[JsonProperty("id")]
-		public Guid TagId;
+		public string Id;
 		[JsonProperty("name")]
-		public string TagText;
+		public string Text;
 	}
 
 	public class GameSettingsObject
 	{
 		[JsonProperty("id")]
-		public Guid id { get; set; }
+		public string id { get; set; }
 		[JsonProperty("goalpoint")]
 		public int GoalPoint { get; set; }
 		[JsonProperty("maxplayers")]

@@ -36,7 +36,7 @@ namespace GardylooServer.Repository
 			try
 			{
 				JsonSerializer serializer = new JsonSerializer();
-				var result = serializer.Deserialize<List<T>>(new JsonTextReader(new StreamReader(ConnectionString)));
+				var result = serializer.Deserialize<IList<T>>(new JsonTextReader(new StreamReader(ConnectionString)));
 				return result;
 			}
 			catch (Exception ex)

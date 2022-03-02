@@ -1,5 +1,7 @@
 ﻿using GardylooServer.Handlers;
+using GardylooServer.Hubs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,18 +18,29 @@ namespace GardylooServer.Controllers
 	{
 		private readonly ILogger<GameStateController> _logger;
 		private readonly GameHandler _gameHandler;
+		private readonly IHubContext<GameStateHub> _statehub;
 
-		public GameStateController(ILogger<GameStateController> logger, GameHandler gameHandler)
+		public GameStateController(ILogger<GameStateController> logger, GameHandler gameHandler, IHubContext<GameStateHub> statehub)
 		{
 			_logger = logger;
 			_gameHandler = gameHandler;
+			_statehub = statehub;
 		}
 
 		// GET: api/<StateController>
 		[HttpGet]
-		public IEnumerable<string> Get()
+		public async Task<IActionResult> Get()
 		{
-			return new string[] { "initializing", "waiting" };
+			try
+			{
+				await _statehub.Clients.All.SendAsync("GetState", "meep");
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex.Message);
+				return BadRequest("Failed Connecting to GameSettings Websocket service");
+			}
 		}
 
 		// GET api/<StateController>/5

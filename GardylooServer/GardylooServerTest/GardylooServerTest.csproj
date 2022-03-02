@@ -24,4 +24,9 @@
     <ProjectReference Include="..\GardylooServer\GardylooServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData\sounds\" />
+    <Folder Include="TestData\prompts\" />
+  </ItemGroup>
+
 </Project>

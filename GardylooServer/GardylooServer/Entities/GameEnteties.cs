@@ -12,16 +12,16 @@ namespace GardylooServer.Entities
 
 	public enum GameStatusEnum
 	{
-		gamesetup,
-		gameinitalizing,
-		waitingtostart,
-		gamestart,
-		leaderprompt,
-		playeranswere,
-		leaderanswere,
-		gamepoint,
-		gamevictory,
-		gamefinish
+		gamesetup, // Rummet har skapats och spelare välejr setting
+		gameinitalizing, // Rummet förbered
+		waitingtostart, // spelet startas spelare kan koppla upp sig
+		gamestart, // spelet förbereder en omgång
+		leaderprompt, // ledaren får se sin prompt
+		playeranswere, // spelare väljer sigg spel utifrån prompt
+		leaderanswere, // ledaren får välja ett svar från spelarna
+		gamepoint, // spelaren får poäng
+		gamevictory, // en spelare har vunnit
+		gamefinish // spelet stänger av
 	}
 
 	public class Room
@@ -54,6 +54,13 @@ namespace GardylooServer.Entities
 			this.name = name;
 			this.leader = leader;
 		}
+	}
+
+	public class GameTag
+	{
+		public Guid id;
+		public string text;
+
 	}
 
 	public class GameSettings

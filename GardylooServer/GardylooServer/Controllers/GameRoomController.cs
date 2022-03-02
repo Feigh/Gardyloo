@@ -19,10 +19,10 @@ namespace GardylooServer.Controllers
 	{
 		private readonly ILogger<GameRoomController> _logger;
 		private readonly IRoomHandler<Room> _roomHandler;
-		private readonly IDataReader<GameSettings> _dataHandler;
+		private readonly IDataReader<GameSettingsObject> _dataHandler;
 		private readonly IMapper _mapper;
 
-		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, IDataReader<GameSettings> settings, IMapper mapper)
+		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<Room> handler, IDataReader<GameSettingsObject> settings, IMapper mapper)
 		{
 			_logger = logger;
 			_roomHandler = handler;
@@ -35,7 +35,8 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _dataHandler.GetItem("")));
+				//var result = _mapper.Map<GameSettings>(_dataHandler.GetItem(""));
+				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))));
 			}
 			catch (Exception ex)
 			{

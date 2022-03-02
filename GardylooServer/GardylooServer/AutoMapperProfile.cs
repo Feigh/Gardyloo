@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace GardylooServer
 {
-	public class MappingProfile : Profile
+	public class AutoMapperProfile : Profile
     {
-        public MappingProfile()
+        public AutoMapperProfile()
         {
             // Add as many of these lines as you need to map your objects
             CreateMap<GameSettings, GameSettingsObject>();
             CreateMap<GameSettingsObject, GameSettings>();
+
+            CreateMap<GameTag, GameTagsObject>();
+            CreateMap<GameTagsObject, GameTag>();
         }
 	}
 }

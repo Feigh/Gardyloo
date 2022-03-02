@@ -1,24 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GardylooServer.Hubs;
+using Microsoft.AspNetCore.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GardylooServer.Controllers
 {
+	[EnableCors("_myAllowSpecificOrigins")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class PlayerController : ControllerBase
 	{
+		protected readonly IHubContext<PlayersStateHub> _playerHub;
 		private readonly ILogger<PlayerController> _logger;
-		// GET: api/<PlayerController>
-		[HttpGet]
-		public IEnumerable<string> Get()
+
+		public PlayerController(IHubContext<PlayersStateHub> playerHub, ILogger<PlayerController> logger)
 		{
-			return new string[] { "value1", "value2" };
+			_playerHub = playerHub;
+			_logger = logger;
+		}
+
+		// GET: api/<PlayerController>
+		//[EnableCors("CorsPolicy")]
+		[HttpGet]
+		public async Task<IActionResult> Get()
+		{
+			await _playerHub.Clients.All.SendAsync("GetPlayerState", "The message 'Moop' has been received");
+			return Ok();
 		}
 
 		// GET api/<PlayerController>/5

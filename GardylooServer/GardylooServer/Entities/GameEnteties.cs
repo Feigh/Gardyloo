@@ -40,6 +40,13 @@ namespace GardylooServer.Entities
 			this.state = GameStatusEnum.gamesetup;
 			this.PlayerList = new List<Player>();
 		}
+		public Room(string name)
+		{
+			this.id = Guid.NewGuid();
+			this.Name = name;
+			this.state = GameStatusEnum.gamesetup;
+			this.PlayerList = new List<Player>();
+		}
 	}
 
 	public class Player

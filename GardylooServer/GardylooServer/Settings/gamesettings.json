@@ -1,7 +1,7 @@
 {
 	"id": "33574ed3-72db-4b4c-bd91-b2a84ba38213",
-	"goalpoint": 3,
-	"maxplayers": 6,
+	"goalpoint": 5,
+	"maxplayers": 8,
 	"minplayers": 2,
 	"timelimit": 120,
 	"selectedtags": [],

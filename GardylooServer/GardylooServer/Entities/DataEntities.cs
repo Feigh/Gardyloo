@@ -54,4 +54,29 @@ namespace GardylooServer.Entities
 
 	}
 
+	public class GameRoomObject
+	{
+		[JsonProperty("id")]
+		public string id { get; set; }
+		[JsonProperty("name")]
+		public string Name { get; set; }
+		[JsonProperty("settings")]
+		public GameSettingsObject Settings { get; set; }
+		[JsonProperty("gamestatus")]
+		public string GameStatus { get; set; }
+		[JsonProperty("playerlist")]
+		public List<PlayerObject> PlayerList { get; set; }
+	}
+
+
+	public class PlayerObject
+	{
+		[JsonProperty("id")]
+		public string id { get; set; }
+		[JsonProperty("name")]
+		public string Name { get; set; }
+		[JsonProperty("leader")]
+		public bool Leader { get; set; }
+
+	}
 }

@@ -18,7 +18,7 @@ namespace GardylooServer.Hubs
 			_logger = logger;
 			_roomhandler = rhandler;
 		}
-		public async Task SendMessage(string message)
+		public async Task SendPlayer(string message)
 		{
 			await Clients.All.SendAsync("ReceiveMessage", message);
 		}

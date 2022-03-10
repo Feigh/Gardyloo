@@ -35,8 +35,8 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				//var result = _mapper.Map<GameSettings>(_dataHandler.GetItem(""));
-				return new JsonResult(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))));
+				//var result = _mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))));
+				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem("")))));
 			}
 			catch (Exception ex)
 			{
@@ -46,17 +46,17 @@ namespace GardylooServer.Controllers
 		}
 
 		// GET api/<GameRoom>/5
-		[HttpGet("{roomname}")]
-		public IActionResult Get(string roomname)
+		[HttpGet("room")]
+		public IActionResult Get(string room)
 		{
 			try
 			{
-				return new JsonResult(_roomHandler.RoomList.Where(x => x.Name==roomname).FirstOrDefault());
+				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.RoomList.Where(x => x.Name==room).FirstOrDefault()));
 			}
 			catch(Exception ex)
 			{
 				_logger.LogError(ex.Message);
-				return BadRequest($"Failed Finding the Requested Room {roomname}");
+				return BadRequest($"Failed Finding the Requested Room {room}");
 			}
 		}
 

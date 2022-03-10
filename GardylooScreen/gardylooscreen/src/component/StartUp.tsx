@@ -7,7 +7,7 @@ export interface IPlayerHub {
     HubConnect: signalR.HubConnection;
   }
 
-function AwaitStart() {
+function StartUp() {
 
     const [ connection, setConnection ] = useState<signalR.HubConnection>();
 
@@ -48,7 +48,7 @@ function AwaitStart() {
 
     const SendMessage = () =>{
         if (connection) {
-        connection.invoke("SendMessage", "boop").catch(function (err) {
+        connection.invoke("SendPlayer", "boop").catch(function (err) {
             return console.error(err.toString());
         });
         }
@@ -71,4 +71,4 @@ function AwaitStart() {
     );
 }
 
-export default AwaitStart;
+export default StartUp;

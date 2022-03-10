@@ -56,17 +56,18 @@ namespace GardylooServerTest.Integration
 
 			Assert.NotNull(result);
 
-			Assert.IsType< JsonResult>(result);
+			Assert.IsType<JsonResult>(result);
 
 			var result2 = (JsonResult)result;
 			var result3 = (Room)result2.Value;
 
-			Assert.True(result3.Name!="AAAA");// Controll that is has not testvalue
+			Assert.True(result3.Name != "AAAA");// Controll that is has not testvalue
 			Assert.True(result3.Name.Length == 4);
 			Assert.Matches("\\w{4}", result3.Name);
 
 			Assert.NotNull(result3.Settings);
 		}
+
 		[Fact]
 		public void Task_Get_ReturnTheRoomAtTheId()
 		{

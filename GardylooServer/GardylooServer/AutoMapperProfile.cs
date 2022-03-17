@@ -15,8 +15,8 @@ namespace GardylooServer
 			CreateMap<GameSettings, GameSettingsObject>();
 			CreateMap<GameSettingsObject, GameSettings>();
 
-			CreateMap<GameTag, GameTagsObject>();
-			CreateMap<GameTagsObject, GameTag>();
+			CreateMap<GameTag, GameTagObject>();
+			CreateMap<GameTagObject, GameTag>();
 
 			CreateMap<Room, GameRoomObject>().ForMember(
 				dest => dest.GameStatus,

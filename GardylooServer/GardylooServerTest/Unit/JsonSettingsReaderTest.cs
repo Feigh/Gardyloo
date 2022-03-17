@@ -26,7 +26,7 @@ namespace GardylooServerTest.Unit
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 
 			var appsettings = new Dictionary<string, string> {
-				{"ConnectionStrings:DefaultConnection", "../../../TestData/settings/testsettings2.json"}
+				{"ConnectionStrings:DefaultConnection", "../../../TestData/Data/defaultconnection.json"}
 			};
 
 			var mockconfig = new ConfigurationBuilder()

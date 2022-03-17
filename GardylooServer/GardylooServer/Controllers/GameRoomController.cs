@@ -35,7 +35,6 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				//var result = _mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))));
 				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem("")))));
 			}
 			catch (Exception ex)

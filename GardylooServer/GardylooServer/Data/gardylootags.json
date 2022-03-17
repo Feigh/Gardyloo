@@ -1,0 +1,74 @@
+[
+	{
+		"id": "9fb1d07b-2dbe-49d7-bef9-9240347248a6",
+		"name": "General"
+	},
+	{
+		"id": "c3e08b4d-d3dc-40c5-a3fc-2d59514d743e",
+		"name": "Nature"
+	},
+	{
+		"id": "61819dd3-fac0-4370-9cba-b9042f25689e",
+		"name": "Animal"
+	},
+	{
+		"id": "e668a5af-6896-43c4-8a41-7ff7c11e1213",
+		"name": "Horror"
+	},
+	{
+		"id": "00aaf1a8-a863-4504-80a9-e433ebce2e16",
+		"name": "Movie"
+	},
+	{
+		"id": "463d3343-c2cb-4541-95ad-7b4c8ca7e01d",
+		"name": "Mass Effect"
+	},
+	{
+		"id": "e1986661-d161-4aeb-872d-a37e9985a3ff",
+		"name": "Garrus"
+	},
+	{
+		"id": "482c16f5-277c-4126-a99a-f88d3458aad9",
+		"name": "Video Game"
+	},
+	{
+		"id": "2213093e-ea19-45e0-8dac-b23d95ba30cd",
+		"name": "Music"
+	},
+	{
+		"id": "8445f500-2fb0-4810-87f0-55e3356bc969",
+		"name": "Bad Movie"
+	},
+	{
+		"id": "11f46c15-4088-425f-a931-59063d0e5267",
+		"name": "Neil Breen"
+	},
+	{
+		"id": "61cfbd45-7dfd-44c5-ae65-4c6601d4439c",
+		"name": "Super Mario"
+	},
+	{
+		"id": "5c67da1c-a96b-4a0d-a5ca-407c76ec3c28",
+		"name": "Streamer"
+	},
+	{
+		"id": "07b9f898-2a9e-4519-8983-a0c73beed04b",
+		"name": "Internet Meme"
+	},
+	{
+		"id": "0e7eb7b6-6124-4ea9-9244-ed47adac839e",
+		"name": "Bad Music"
+	},
+	{
+		"id": "20b0e885-804b-4efc-b745-117ab33e1559",
+		"name": "Weapon"
+	},
+	{
+		"id": "d9e904c9-e15d-4400-9e52-473abf8330b7",
+		"name": "NSFW"
+	},
+	{
+		"id": "c3c1f3bb-5ccc-4242-9a76-902d2bc711fa",
+		"name": "political"
+	}
+]

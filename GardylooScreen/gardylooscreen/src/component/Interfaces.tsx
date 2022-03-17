@@ -15,3 +15,12 @@ export interface IRoom {
     Settings: IRoomSettings;
     PlayerList:[];
 }
+
+export interface ITag {
+    Text: string;
+    id: string;
+}
+
+export interface ITagExtend extends ITag {
+    active?: boolean;
+}

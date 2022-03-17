@@ -16,10 +16,10 @@ namespace GardylooServer.Controllers
 	public class GameTagController : ControllerBase
 	{
 		private readonly ILogger<GameTagController> _logger;
-		private readonly IDataReader<GameTagsObject> _dataHandler;
+		private readonly IDataReader<GameTagObject> _dataHandler;
 		private readonly IMapper _mapper;
 
-		public GameTagController(ILogger<GameTagController> logger, IDataReader<GameTagsObject> dataHandler, IMapper mapper)
+		public GameTagController(ILogger<GameTagController> logger, IDataReader<GameTagObject> dataHandler, IMapper mapper)
 		{
 			_logger = logger;
 			_dataHandler = dataHandler;
@@ -31,27 +31,27 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				return new JsonResult(_mapper.Map<IList<GameTag>>(_dataHandler.GetAllItem().ToList()));
+				return new JsonResult(_mapper.Map<List<GameTagObject>>(_dataHandler.GetAllItem()));
 			}
 			catch (Exception ex)
 			{
 				_logger.LogError(ex.Message);
-				return BadRequest("Failed Creating a new Room");
+				return BadRequest("Failed Geting All Tags");
 			}
 		}
 
 
-		[HttpGet("{id}")]
-		public IActionResult Get(string id)
+		[HttpGet("tag")]
+		public IActionResult Get(string tag)
 		{
 			try
 			{
-				return new JsonResult(_mapper.Map<GameTag>(_dataHandler.GetAllItem().Where(x => x.Id==id).FirstOrDefault()));
+				return new JsonResult(_mapper.Map<GameTagObject>(_dataHandler.GetAllItem().Where(x => x.id==tag).FirstOrDefault()));
 			}
 			catch (Exception ex)
 			{
 				_logger.LogError(ex.Message);
-				return BadRequest("Failed Creating a new Room");
+				return BadRequest("Failed Geting Specefic Tags");
 			}
 		}
 

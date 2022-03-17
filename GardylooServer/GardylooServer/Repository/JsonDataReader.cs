@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using GardylooServer.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +18,7 @@ namespace GardylooServer.Repository
 		{
 			_logger = logger;
 			ConnectionString = config.GetConnectionString("DefaultConnection");
+			//ConnectionString = ReadDataFile();
 		}
 
 		public string ConnectionString { get; set; }
@@ -31,12 +33,39 @@ namespace GardylooServer.Repository
 			throw new NotImplementedException();
 		}
 
+		private string ReadDataFile()
+		{
+			try
+			{
+				JsonSerializer serializer = new JsonSerializer();
+				var stuff = serializer.Deserialize<Dictionary<string, string>>(new JsonTextReader(new StreamReader(ConnectionString)));
+
+				var keyvalue = "";
+
+				if(typeof(T) == typeof(GameSettings) || typeof(T) == typeof(GameSettingsObject))
+				{
+					stuff.TryGetValue("Settings", out keyvalue);
+				}
+				else if(typeof(T) == typeof(GameTag) || typeof(T) == typeof(GameTagObject))
+				{
+					stuff.TryGetValue("Tags", out keyvalue);
+				}
+
+				return keyvalue;
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"Error in JsonDataReader : {ex.Message}");
+				throw new Exception(ex.Message);
+			}
+		}
+
 		public IEnumerable<T> GetAllItem()
 		{
 			try
 			{
 				JsonSerializer serializer = new JsonSerializer();
-				var result = serializer.Deserialize<IList<T>>(new JsonTextReader(new StreamReader(ConnectionString)));
+				var result = serializer.Deserialize<IList<T>>(new JsonTextReader(new StreamReader(ReadDataFile())));
 				return result;
 			}
 			catch (Exception ex)
@@ -51,7 +80,7 @@ namespace GardylooServer.Repository
 			try
 			{
 				JsonSerializer serializer = new JsonSerializer();
-				var result = serializer.Deserialize<T>(new JsonTextReader(new StreamReader(ConnectionString)));
+				var result = serializer.Deserialize<T>(new JsonTextReader(new StreamReader(ReadDataFile())));
 				return result;
 			}
 			catch (Exception ex)

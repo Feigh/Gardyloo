@@ -29,7 +29,7 @@ namespace GardylooServerTest.Integration
 				It.IsAny<Exception>(),
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 
-			var mocktagLog = new Mock<ILogger<JsonDataReader<GameTagsObject>>>();
+			var mocktagLog = new Mock<ILogger<JsonDataReader<GameTagObject>>>();
 			mockLog.Setup(x => x.Log<It.IsAnyType>(
 				It.IsAny<LogLevel>(),
 				It.IsAny<EventId>(),
@@ -45,7 +45,7 @@ namespace GardylooServerTest.Integration
 			.AddInMemoryCollection(appsettings)
 			.Build();
 
-			var mackdatatag = new JsonDataReader<GameTagsObject>(mocktagLog.Object, mockconfig);
+			var mackdatatag = new JsonDataReader<GameTagObject>(mocktagLog.Object, mockconfig);
 
 			var mockMapper = new MapperConfiguration(cfg =>
 			{

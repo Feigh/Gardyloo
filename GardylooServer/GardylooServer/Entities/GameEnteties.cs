@@ -68,6 +68,11 @@ namespace GardylooServer.Entities
 		public Guid id;
 		public string text;
 
+		public GameTag()
+		{
+			this.id = Guid.NewGuid();
+			this.text = "";
+		}
 	}
 
 	public class GameSettings
@@ -77,8 +82,8 @@ namespace GardylooServer.Entities
 		public int MaxPlayers { get; set; }
 		public int MinPlayers { get; set; }
 		public double TimeLimit { get; set; }
-		public IList<GameTagsObject> SelectedTags { get; set; }
-		public IList<GameTagsObject> ExcludedTags { get; set; }
+		public IList<GameTagObject> SelectedTags { get; set; }
+		public IList<GameTagObject> ExcludedTags { get; set; }
 
 		public GameSettings()
 		{
@@ -87,8 +92,8 @@ namespace GardylooServer.Entities
 			MaxPlayers = 0;
 			MinPlayers = 0;
 			TimeLimit = 0;
-			SelectedTags = new List<GameTagsObject>();
-			ExcludedTags = new List<GameTagsObject>();
+			SelectedTags = new List<GameTagObject>();
+			ExcludedTags = new List<GameTagObject>();
 		}
 	}
 

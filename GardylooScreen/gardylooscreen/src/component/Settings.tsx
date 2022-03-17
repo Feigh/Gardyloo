@@ -5,7 +5,7 @@ import axios from 'axios';
 import TagList from './TagList'
 import SettingsSelect from './SettingsSelect'
 import SettingsActionButtons from './SettingsActionButtons'
-import {IRoom, IRoomSettings} from './Interfaces'
+import {IRoom, IRoomSettings, ITag} from './Interfaces'
 import { Console } from 'console';
 
 
@@ -31,6 +31,7 @@ function Settings() {
             }})
         return respons.data
     }
+
 
     const CreateCookie = async () => {
         var room = await getNewRoom()
@@ -75,8 +76,6 @@ function Settings() {
         }
         
     }, []);
-
-    const changePlayer = (e:React.ChangeEvent<HTMLInputElement>) => { setSettings(prevState => {return {...prevState, MaxPlayers: parseInt(e.target.value)}})}
 
     return (
     <div className="container">

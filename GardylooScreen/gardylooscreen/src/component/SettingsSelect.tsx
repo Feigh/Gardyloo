@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TextBox from './TextBox'
 
 interface ISettingsSelection {
-    GoalPoint?: number;
+    GoalPoint?: number | null;
     MaxPlayers?: number;
     TimeLimit?: number;
     PlayerChange(e:React.ChangeEvent<HTMLInputElement>) : any;

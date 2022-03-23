@@ -61,16 +61,16 @@ namespace GardylooServer.Controllers
 
 		// POST api/<GameRoom>
 		[HttpPost]
-		public IActionResult Post([FromBody] string value)
+		public IActionResult Post([FromBody] GameRoomObject room)
 		{
 			try
 			{
-				return BadRequest($"Failed Updating Room {value}");
+				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.UpdateRoom(_mapper.Map<Room>(room))));
 			}
 			catch (Exception ex)
 			{
 				_logger.LogError(ex.Message);
-				return BadRequest($"Failed Updating Room {value}");
+				return BadRequest($"Failed Updating Room {room.Name}");
 			}
 		}
 	}

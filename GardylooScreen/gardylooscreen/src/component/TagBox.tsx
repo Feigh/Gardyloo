@@ -11,7 +11,7 @@ function TagBox(item:ITagExtend) {
     }
 
     return (      
-        <button id={item.id} className={ChangeButtonState()}>{item.Text}</button>
+        <button id={item.id} className={ChangeButtonState()} onClick={() => {if(item.ToggleButton) item.ToggleButton(item.id)}} >{item.Text}</button>
     );
 }
 

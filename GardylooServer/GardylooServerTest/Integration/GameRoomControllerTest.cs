@@ -87,5 +87,32 @@ namespace GardylooServerTest.Integration
 			Assert.True(result3.Name == newroom3.Name);
 			Assert.NotNull(result3.Settings);
 		}
+
+		[Fact]
+		public void Task_Update_ChangeStateAndUpdateSettings()
+		{
+			var newroom = _sut.Get(); // CreateRoom
+
+			var newroom2 = (JsonResult)newroom;
+			var newroom3 = (GameRoomObject)newroom2.Value;
+
+			var settingobj = new GameSettingsObject() { id = newroom3.Settings.id.ToString(), GoalPoint = 5, MaxPlayers = 10 };
+			var roomobj = new GameRoomObject() { id = newroom3.id.ToString(), Name = newroom3.Name, GameStatus = newroom3.GameStatus, PlayerList = new List<PlayerObject>(), Settings=settingobj };
+
+			var result = _sut.Post(roomobj);
+
+			Assert.NotNull(result);
+			Assert.IsType<JsonResult>(result);
+
+			var result2 = (JsonResult)result;
+			var result3 = (GameRoomObject)result2.Value;
+
+			Assert.True(result3.Name == newroom3.Name);
+			Assert.True(result3.GameStatus==GameStatusEnum.waitingtostart.ToString());
+			Assert.NotNull(result3.Settings);
+
+			Assert.True(result3.Settings.MaxPlayers==10);
+			Assert.True(result3.Settings.GoalPoint==5);
+		}
 	}
 }

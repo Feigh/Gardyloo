@@ -20,8 +20,10 @@ namespace GardylooServer
 
 			CreateMap<Room, GameRoomObject>().ForMember(
 				dest => dest.GameStatus,
-				opt => opt.MapFrom(src => src.state.ToString())).ReverseMap();
-			//CreateMap<GameRoomObject, Room>();
+				opt => opt.MapFrom(src => src.state.ToString()));
+			CreateMap<GameRoomObject, Room>().ForMember(
+				dest => dest.state,
+				opt => opt.MapFrom(src => src.GameStatus));
 
 			CreateMap<Player, PlayerObject>();
 			CreateMap<PlayerObject, Player>();

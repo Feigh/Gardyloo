@@ -1,11 +1,11 @@
 export interface IRoomSettings {
-    id?: string;
-    GoalPoint?: number;
-    MaxPlayers?: number;
-    MinPlayers?: number;
-    TimeLimit?: number;
-    SelectedTags?:[];
-    ExcludedTags?:[];
+    id: string;
+    GoalPoint: number;
+    MaxPlayers: number;
+    MinPlayers: number;
+    TimeLimit: number;
+    SelectedTags:[];
+    ExcludedTags:[];
 }
 
 export interface IRoom {
@@ -23,4 +23,11 @@ export interface ITag {
 
 export interface ITagExtend extends ITag {
     active?: boolean;
+    ToggleButton?(id:string) : any;
 }
+
+export interface ITagState {
+    taglist: ITagExtend[];
+    setEvent(list:ITagExtend[]) : any;
+}
+

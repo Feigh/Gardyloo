@@ -32,5 +32,9 @@ export interface ITagState {
 }
 
 export interface IEvent {
-    sendMessage(room:string) : any;
+    setName(room:string) : any;
+}
+
+export interface IAppData{
+    roomName : string;
 }

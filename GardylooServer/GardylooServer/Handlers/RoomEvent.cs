@@ -55,7 +55,8 @@ namespace GardylooServer.Handlers
 			{
 				_room.state = state;
 
-				_stateEvent.Invoke();
+				if(_stateEvent!=null)
+					_stateEvent.Invoke();
 
 				return _room.state;
 			}

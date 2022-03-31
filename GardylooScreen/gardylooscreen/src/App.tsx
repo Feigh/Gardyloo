@@ -9,14 +9,52 @@ import './App.css';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import * as signalR from "@microsoft/signalr";
+import { useCookies } from "react-cookie";
+import axios from 'axios';
+import {IRoom} from './component/Interfaces'
 
 function App() {
   
   const [ connection, setConnection ] = useState<signalR.HubConnection>();
+  const [cookies, setCookie] = useCookies(['room']);
+
+  const getNewRoom = async (): Promise<string> => {
+    const respons = await axios.get('https://localhost:44327/api/gameroom')
+    return respons.data.Name;
+  }
+
+  const CreateCookie = async () => {
+    getNewRoom().then(room => {
+      setCookie('room', room, { path: '/', sameSite:true });
+      });
+    }  
+
+  const getRoom = async(name : string): Promise<IRoom> => {
+    const respons = await axios.get('https://localhost:44327/api/gameroom/room', {
+        params: {
+            room: name
+        }})
+    console.log(respons.data);
+    return respons.data
+  }
 
   useEffect(() => {
       const hubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/statehub").build();
       setConnection(hubConnection);
+
+
+      if(cookies.room === undefined){
+        CreateCookie();
+      } 
+      else{
+        getRoom(cookies.room).then(item => {
+          if(item===null || item===undefined){
+            CreateCookie();
+          }
+        }).catch (error => {
+          CreateCookie();
+        })
+      }
   }, []);
 
   const getRoomState = (room :string) =>{// bör ta in en string med rum id, så när settings har skapat ett rum då anropas getstate
@@ -34,10 +72,12 @@ function App() {
         connection.start()
             .then(result => {
                 console.log('Connected!');  
+                getRoomState(cookies.room)
                 // här vill jag anropa getstate där jag vill få veta ny state varje gång den ändras
                 connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
                     console.log("Received message"+ message);
-                    RoomReroute(message)
+                    // pseudo const namn = await GetRoomName();
+                    //RoomReroute(message)
                 });
             })
             .catch(e => console.log('Connection failed: ', e));
@@ -52,7 +92,7 @@ function App() {
       <header className="App-header">
       <BrowserRouter>
         <Routes>
-            <Route path="/" element={<SettingsMain  sendMessage={(x) => getRoomState(x)}/>}/> 
+            <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
             <Route path="/startup" element={<StartUp />}/>
         </Routes>
       </BrowserRouter>

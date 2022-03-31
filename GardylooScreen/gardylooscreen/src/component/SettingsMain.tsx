@@ -1,19 +1,13 @@
 import React, { useState, useEffect, EventHandler } from 'react';
 import { useNavigate  } from "react-router-dom";
 import Settings from './Settings'
-import { useCookies } from "react-cookie";
+
 import axios from 'axios';
-import {IRoom, IRoomSettings, ITag, ITagExtend, IEvent} from './Interfaces'
+import {IRoom, IRoomSettings, ITag, ITagExtend, IEvent, IAppData} from './Interfaces'
 
-function SettingsMain(ws : IEvent) {
+function SettingsMain(app : IAppData) {
 
-    const [cookies, setCookie] = useCookies(['room']);
     const [roomItem, setRoomItem] = useState<IRoom>({id:"", Name:"", GameStatus:"", PlayerList:[], Settings:{id:"", GoalPoint:0, MaxPlayers:0, TimeLimit:0, ExcludedTags:[], MinPlayers:0, SelectedTags:[]} });
-  
-    const getNewRoom = async (): Promise<string> => {
-      const respons = await axios.get('https://localhost:44327/api/gameroom')
-      return respons.data.Name;
-    }
   
     const getRoom = async(name : string): Promise<IRoom> => {
       console.log("get room data " + name)
@@ -34,38 +28,9 @@ function SettingsMain(ws : IEvent) {
   
     }
   
-    const CreateCookie = async () => {
-      getNewRoom().then(room => {
-        setCookie('room', room, { path: '/', sameSite:true });
-        getRoom(room).then(item => {setRoomItem(item); ws.sendMessage(item.Name)
-        });
-      })  
-    }
-  
-    const GetRoom = async () : Promise<IRoom> =>{
-      let cookie = await getRoom(cookies.room)
-      return cookie
-    }
-  
     useEffect(() => {
-              // om cookie är tom skapa ett nytt rum
-            if(cookies.room === undefined){
-                CreateCookie();
-            } 
-            else{
-              getRoom(cookies.room).then(item => {
-                console.log("get room")
-                if(item===null || item===undefined){
-                  CreateCookie();
-                }
-                else{
-                  setRoomItem(item)
-                  ws.sendMessage(item.Name)
-                }
-              }).catch (error => {
-                CreateCookie();
-              })
-            }
+
+      getRoom(app.roomName).then(items => setRoomItem(items))
       
     }, []);
 

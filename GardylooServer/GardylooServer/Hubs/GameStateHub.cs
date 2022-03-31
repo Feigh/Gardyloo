@@ -20,27 +20,41 @@ namespace GardylooServer.Hubs
 		}
 		public async Task GetState(string room)
 		{
-			// Detta är anropet från  klienten och room är det rum som settings skapat
-			// då ham man room handler och lägg in listener som då lägger ett event i add
-			var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
-			if(myRoom!=null)
-				myRoom.AddStateListener(() => SendState(room));
+
+			try
+			{
+				var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
+				if (myRoom != null)
+				{
+					await Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString()); // skicka status till klienten
+					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
+						myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
+				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"Error in GetState : {ex.Message}");
+			}
 		}
 
-		public string SendState(string room)
+		public async Task UpdateClient(string room)
 		{
-			var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
-			//await Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString()); // await denna anropar mottagaren. men vi behövr inte fått nått svar så man bara fortsätter
 
-			if (myRoom.RoomData.state == GameStatusEnum.gamefinish)
+			try
 			{
-				//await Clients.Caller.SendAsync("Finish");
+				var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
+				if (myRoom != null)
+				{
+					//var context = Microsoft.AspNetCore.SignalR.
+
+					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
+					myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				myRoom.AddStateListener(() => SendState(room));
+				_logger.LogError($"Error in GetState : {ex.Message}");
 			}
-			return "";
 		}
 
 		public override async Task OnConnectedAsync()

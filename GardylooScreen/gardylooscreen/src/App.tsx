@@ -42,7 +42,6 @@ function App() {
       const hubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/statehub").build();
       setConnection(hubConnection);
 
-
       if(cookies.room === undefined){
         CreateCookie();
       } 
@@ -73,10 +72,8 @@ function App() {
             .then(result => {
                 console.log('Connected!');  
                 getRoomState(cookies.room)
-                // här vill jag anropa getstate där jag vill få veta ny state varje gång den ändras
                 connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
                     console.log("Received message"+ message);
-                    // pseudo const namn = await GetRoomName();
                     //RoomReroute(message)
                 });
             })

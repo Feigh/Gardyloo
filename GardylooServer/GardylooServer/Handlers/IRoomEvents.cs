@@ -15,7 +15,7 @@ namespace GardylooServer.Handlers
 		public T UpdateSettings(GameSettings settings);
 
 		public GameStatusEnum ChangeState(GameStatusEnum state);
-		public void AddStateListener(Func<string> state);
+		public void AddStateListener(Func<Task> state);
 		public Player AddPlayer(string name);
 		public void AddPlayerListener(Func<string, string> player);
 	}

@@ -11,7 +11,7 @@ namespace GardylooServer.Handlers
 	{
 		private Room _room;
 		private readonly string _roomname;
-		private Func<string> _stateEvent;
+		private Func<Task> _stateEvent;
 
 		public Room RoomData { get { return _room; } }
 		public string RoomName { get { return _room.Name; } }
@@ -66,7 +66,7 @@ namespace GardylooServer.Handlers
 			}
 		}
 
-		public void AddStateListener(Func<string> function)
+		public void AddStateListener(Func<Task> function)
 		{
 			try
 			{

@@ -20,11 +20,8 @@ function SettingsMain(app : IAppData) {
     }
   
     const StartRoom = () => {
-      console.log("get start data ")
-      console.log(roomItem);
-      //const data = {}
       axios.post('https://localhost:44327/api/gameroom', roomItem)
-        .then(res => console.log("posted"))
+        .then(res => console.log("Room state changed") )
   
     }
   

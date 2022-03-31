@@ -59,7 +59,7 @@ namespace GardylooServerTest.Integration
 			Assert.IsType<JsonResult>(result);
 
 			var result2 = (JsonResult)result;
-			var result3 = (Room)result2.Value;
+			var result3 = (GameRoomObject)result2.Value;
 
 			Assert.True(result3.Name != "AAAA");// Controll that is has not testvalue
 			Assert.True(result3.Name.Length == 4);
@@ -74,7 +74,7 @@ namespace GardylooServerTest.Integration
 			var newroom = _sut.Get(); // CreateRoom
 
 			var newroom2 = (JsonResult)newroom;
-			var newroom3 = (Room)newroom2.Value;
+			var newroom3 = (GameRoomObject)newroom2.Value;
 
 			var result = _sut.Get(newroom3.Name); // CreateRoom
 
@@ -82,7 +82,7 @@ namespace GardylooServerTest.Integration
 			Assert.IsType<JsonResult>(result);
 
 			var result2 = (JsonResult)result;
-			var result3 = (Room)result2.Value;
+			var result3 = (GameRoomObject)result2.Value;
 
 			Assert.True(result3.Name == newroom3.Name);
 			Assert.NotNull(result3.Settings);

@@ -12,8 +12,8 @@ namespace GardylooServer.Hubs
 	public class PlayersStateHub : Hub
 	{
 		private readonly ILogger<PlayersStateHub> _logger;
-		private readonly IRoomHandler<Room> _roomhandler;
-		public PlayersStateHub(ILogger<PlayersStateHub> logger, IRoomHandler<Room> rhandler)
+		private readonly IRoomHandler<RoomEvent> _roomhandler;
+		public PlayersStateHub(ILogger<PlayersStateHub> logger, IRoomHandler<RoomEvent> rhandler)
 		{
 			_logger = logger;
 			_roomhandler = rhandler;

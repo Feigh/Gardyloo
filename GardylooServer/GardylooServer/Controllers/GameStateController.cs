@@ -1,5 +1,6 @@
 ﻿using GardylooServer.Handlers;
 using GardylooServer.Hubs;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace GardylooServer.Controllers
 {
+	[EnableCors("_myAllowSpecificOrigins")]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class GameStateController : ControllerBase

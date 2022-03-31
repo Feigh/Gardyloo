@@ -3,6 +3,7 @@ using GardylooServer.Handlers;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
 
@@ -29,11 +30,11 @@ namespace GardylooServerTest.Unit
 		{
 			var settings = new GameSettings();
 
-			var room = _sut.AddRoom("AAAA", settings);
+			var room = _sut.AddRoom("AAAA", settings).RoomData;
 
 			room.Settings = new GameSettings() { GoalPoint = 8, MaxPlayers = 10 };
 
-			var result = _sut.UpdateRoom(room);
+			var result = _sut.RoomList.Where(x => x.RoomName=="AAAA").FirstOrDefault().UpdateRoom(room);
 
 			Assert.NotNull(result);
 			Assert.True(result.Name == "AAAA");
@@ -48,13 +49,13 @@ namespace GardylooServerTest.Unit
 		{
 			var settings = new GameSettings();
 
-			var room = _sut.AddRoom("AAAA", settings);
+			var room = _sut.AddRoom("AAAA", settings).RoomData;
 
 			room.Settings = new GameSettings() { GoalPoint = 8, MaxPlayers = 10 };
 
 			var newroom = new Room("BBBB", new GameSettings());
 
-			Assert.Throws<ArgumentNullException>(() => _sut.UpdateRoom(newroom));
+			Assert.Throws<ArgumentNullException>(() => _sut.RoomList.Where(x => x.RoomName == "AAAA").FirstOrDefault().UpdateRoom(newroom));
 
 		}
 	}

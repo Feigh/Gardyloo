@@ -38,7 +38,7 @@ namespace GardylooServerTest.Integration
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 
 			var appsettings = new Dictionary<string, string> {
-				{"ConnectionStrings:DefaultConnection", "../../../TestData/tags/testtags1.json"}
+				{"ConnectionStrings:DefaultConnection", "../../../TestData/Data/defaultconnection.json"}
 			};
 
 			var mockconfig = new ConfigurationBuilder()
@@ -66,10 +66,10 @@ namespace GardylooServerTest.Integration
 			Assert.IsType<JsonResult>(result);
 
 			var result2 = (JsonResult)result;
-			var result3 = (GameTag)result2.Value;
+			var result3 = (GameTagObject)result2.Value;
 
-			Assert.True(result3.id == Guid.Parse("e668a5af-6896-43c4-8a41-7ff7c11e1213"));// Controll that is has not testvalue
-			Assert.True(result3.text == "Horror");
+			Assert.True(result3.id == "e668a5af-6896-43c4-8a41-7ff7c11e1213");// Controll that is has not testvalue
+			Assert.True(result3.Text == "Horror");
 
 		}
 
@@ -83,11 +83,11 @@ namespace GardylooServerTest.Integration
 			Assert.IsType<JsonResult>(result);
 
 			var result2 = (JsonResult)result;
-			var result3 = (IList<GameTag>)result2.Value;
+			var result3 = (IList<GameTagObject>)result2.Value;
 
 			Assert.True(result3.Count == 8);
-			Assert.Contains(result3, item => item.text == "General");
-			Assert.Contains(result3, item => item.id == Guid.Parse("e1986661-d161-4aeb-872d-a37e9985a3ff"));
+			Assert.Contains(result3, item => item.Text == "General");
+			Assert.Contains(result3, item => item.id == "e1986661-d161-4aeb-872d-a37e9985a3ff");
 		}
 	}
 }

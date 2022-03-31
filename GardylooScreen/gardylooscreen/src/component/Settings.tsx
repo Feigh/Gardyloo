@@ -1,11 +1,9 @@
 import React, { useState, useEffect, EventHandler } from 'react';
-import { useNavigate  } from "react-router-dom";
-import axios from 'axios';
+
 import TagList from './TagList'
 import SettingsSelect from './SettingsSelect'
 import SettingsActionButtons from './SettingsActionButtons'
 import {IRoom, IRoomSettings, ITag, ITagExtend} from './Interfaces'
-import { Console } from 'console';
 
 export interface ISettings {
     roomGoal : number;

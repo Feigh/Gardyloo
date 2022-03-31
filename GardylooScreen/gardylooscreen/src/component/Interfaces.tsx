@@ -31,3 +31,6 @@ export interface ITagState {
     setEvent(list:ITagExtend[]) : any;
 }
 
+export interface IEvent {
+    sendMessage(room:string) : any;
+}

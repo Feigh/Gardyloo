@@ -50,7 +50,7 @@ namespace GardylooServerTest.Unit
 		[Fact]
 		public void Task_ChangeFileSettings()
 		{
-			_sut.ConnectionString = "../../../TestData/settings/testsettings3.json";
+			_sut.ConnectionString = "../../../TestData/Data/defaultconnection2.json";
 			var result = (GameSettings)_sut.GetItem("");
 
 			Assert.True(result.GoalPoint == 5);

@@ -39,7 +39,7 @@ namespace GardylooServerTest.Unit
 			var result = _sut.AddRoom("AAAA", mockset.Object);
 
 			Assert.NotNull(result);
-			Assert.True(result.Name == "AAAA");
+			Assert.True(result.RoomName == "AAAA");
 		}
 		[Fact]
 		public void Task_AddRoom_RoomListHaveNewRoom()
@@ -48,7 +48,7 @@ namespace GardylooServerTest.Unit
 			var result = _sut.AddRoom("AAAA", mockset.Object);
 
 			Assert.NotNull(result);
-			Assert.True(result.Name == "AAAA");
+			Assert.True(result.RoomName == "AAAA");
 		}
 	}
 }

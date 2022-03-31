@@ -9,11 +9,17 @@
   <ItemGroup>
     <None Remove="TestData\appsettings.json" />
     <None Remove="TestData\Data\defaultconnection.json" />
+    <None Remove="TestData\Data\defaultconnection2.json" />
     <None Remove="TestData\Data\gamesettings.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="TestData\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="TestData\Data\defaultconnection2.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

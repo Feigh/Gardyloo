@@ -12,7 +12,7 @@ function StartUp() {
     const [ connection, setConnection ] = useState<signalR.HubConnection>();
 
     useEffect(() => {
-        const hubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/playerhub").build();
+        const hubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/playerehub").build();
         setConnection(hubConnection);
     }, []);
 

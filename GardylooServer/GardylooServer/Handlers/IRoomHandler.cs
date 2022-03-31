@@ -13,7 +13,7 @@ namespace GardylooServer.Handlers
 		public string GenerateRoomName();
 
 		public T AddRoom(string name, GameSettings settings);
-		public T UpdateRoom(Room room);
+		//public T UpdateRoom(Room room);
 		public T DeleteRoom(string name);
 	}
 }

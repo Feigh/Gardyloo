@@ -58,7 +58,7 @@ namespace GardylooServer
 
 			services.AddScoped(typeof(IDataReader<>), typeof(JsonDataReader<>));
 			//services.AddScoped<IDataReader<Room>, JsonDataReader<Room>>();
-			services.AddSingleton<IRoomHandler<Room>, RoomHandler>();
+			services.AddSingleton<IRoomHandler<RoomEvent>, RoomHandler>();
 			services.AddSingleton<IGameHandler, GameHandler>();
 
 			services.AddControllers()
@@ -108,6 +108,7 @@ namespace GardylooServer
 				endpoints.MapControllers();
 				//endpoints.MapHub<GameStateHub>("/statehub");
 				endpoints.MapHub<PlayersStateHub>("/playerhub");//.RequireCors(MyAllowSpecificOrigins);
+				endpoints.MapHub<GameStateHub>("/statehub");
 				//			endpoints.MapControllerRoute(
 				//name: "default",
 				//pattern: "{controller}/{action=Index}/{id?}");

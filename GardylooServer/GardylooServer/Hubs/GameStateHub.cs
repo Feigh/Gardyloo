@@ -13,10 +13,12 @@ namespace GardylooServer.Hubs
 	{
 		private readonly ILogger<GameStateHub> _logger;
 		IRoomHandler<RoomEvent> _roomHandler;
-		public GameStateHub(ILogger<GameStateHub> logger, IRoomHandler<RoomEvent> rhandler)
+		private readonly IHubContext<GameStateHub> _hubContext;
+		public GameStateHub(ILogger<GameStateHub> logger, IRoomHandler<RoomEvent> rhandler, IHubContext<GameStateHub> hubContext)
 		{
 			_logger = logger;
 			_roomHandler = rhandler;
+			_hubContext = hubContext;
 		}
 		public async Task GetState(string room)
 		{
@@ -45,7 +47,7 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					//var context = Microsoft.AspNetCore.SignalR.
+					await _hubContext.Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString());
 
 					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
 					myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras

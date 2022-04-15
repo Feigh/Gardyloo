@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from "react-dom";
 import SettingsMain from './component/SettingsMain'
 import StartUp from './component/StartUp'
@@ -12,11 +12,13 @@ import * as signalR from "@microsoft/signalr";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import {IRoom} from './component/Interfaces'
+import { useNavigate  } from "react-router-dom";
 
 function App() {
   
   const [ connection, setConnection ] = useState<signalR.HubConnection>();
   const [cookies, setCookie] = useCookies(['room']);
+  const naviate = useNavigate();
 
   const getNewRoom = async (): Promise<string> => {
     const respons = await axios.get('https://localhost:44327/api/gameroom')
@@ -74,7 +76,7 @@ function App() {
                 getRoomState(cookies.room)
                 connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
                     console.log("Received message"+ message);
-                    //RoomReroute(message)
+                    RoomReroute(message, naviate);
                 });
             })
             .catch(e => console.log('Connection failed: ', e));
@@ -87,12 +89,10 @@ function App() {
     <CookiesProvider>
     <div className="App">
       <header className="App-header">
-      <BrowserRouter>
         <Routes>
             <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
             <Route path="/startup" element={<StartUp />}/>
         </Routes>
-      </BrowserRouter>
       </header>
     </div>
     </CookiesProvider>

@@ -1,15 +1,25 @@
 import { useNavigate  } from "react-router-dom";
 
-function RoomReroute(state: string) {
+function RoomReroute(state: string, navigate : any) {
 
-    const navigate = useNavigate();
+    console.log("stuff")
+    
+    try {
+        //const navigate = useNavigate();
 
-    if(state==='waitingtostart'){
-        navigate("/startup")
+        console.log("boop")
+    
+        if(state==='waitingtostart'){
+            // if windows current site is not /startup then do navigate
+            navigate("/startup")
+        }
+        else{
+            navigate("/")
+        }  
+    } catch (error) {
+        console.log(error)
     }
-    else{
-        navigate("/")
-    }
+
 }
 
 export default RoomReroute;

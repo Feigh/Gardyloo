@@ -1,0 +1,56 @@
+body {
+    background-color: lightblue;
+    font-family: 'Cairo','Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+h2{
+    font-size: 5em;
+}
+h3{
+    font-size: 4em;
+}
+h4{
+    font-size: 3em;
+}
+.btn-primary{
+    background-color: royalblue !important;
+}
+.bg-primary{
+    background-color: royalblue !important;
+}
+.bg-secondary
+{
+    background-color: coral !important;
+}
+.border
+{
+    border-color: burlywood !important;
+}
+#taglist{
+    height:50vh;
+    background-color: lightskyblue;
+}
+.tag-item
+{
+    min-width: 120px;
+    background-color: royalblue;
+    color: whitesmoke;
+}
+.inactive
+{
+    background-color: cornflowerblue;
+}
+.tag-item .active
+{
+    background-color: royalblue;
+}
+#starta
+{
+    vertical-align: end;
+}
+.lowerarea
+{
+    height: 20vh;
+}
+li {
+    list-style: none;
+}

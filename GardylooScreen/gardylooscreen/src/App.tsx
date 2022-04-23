@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from "react-dom";
 import SettingsMain from './component/SettingsMain'
-import StartUp from './component/StartUp'
+import PlayerWaitingRoom from './component/PlayerWaitingRoom'
 import RoomReroute  from './component/RoomReroute'
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -91,7 +91,7 @@ function App() {
       <header className="App-header">
         <Routes>
             <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
-            <Route path="/startup" element={<StartUp />}/>
+            <Route path="/startup" element={<PlayerWaitingRoom />}/>
         </Routes>
       </header>
     </div>

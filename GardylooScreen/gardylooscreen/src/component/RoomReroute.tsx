@@ -5,16 +5,14 @@ function RoomReroute(state: string, navigate : any) {
     console.log("stuff")
     
     try {
-        //const navigate = useNavigate();
-
         console.log("boop")
     
         if(state==='waitingtostart'){
             // if windows current site is not /startup then do navigate
-            navigate("/startup")
+            navigate("/startup",0)
         }
         else{
-            navigate("/")
+            navigate("/",0)
         }  
     } catch (error) {
         console.log(error)

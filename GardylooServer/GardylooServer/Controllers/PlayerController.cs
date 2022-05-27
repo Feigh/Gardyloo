@@ -17,12 +17,10 @@ namespace GardylooServer.Controllers
 	[ApiController]
 	public class PlayerController : ControllerBase
 	{
-		protected readonly IHubContext<PlayersStateHub> _playerHub;
 		private readonly ILogger<PlayerController> _logger;
 
-		public PlayerController(IHubContext<PlayersStateHub> playerHub, ILogger<PlayerController> logger)
+		public PlayerController( ILogger<PlayerController> logger)
 		{
-			_playerHub = playerHub;
 			_logger = logger;
 		}
 
@@ -31,13 +29,12 @@ namespace GardylooServer.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			await _playerHub.Clients.All.SendAsync("GetPlayerState", "The message 'Moop' has been received");
 			return Ok();
 		}
 
 		// GET api/<PlayerController>/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public string Get(string id)
 		{
 			return "value";
 		}

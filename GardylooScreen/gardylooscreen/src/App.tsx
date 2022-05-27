@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from "react-dom";
 import SettingsMain from './component/SettingsMain'
-<<<<<<< HEAD
-import WaitingPlayers from './component/Waiting'
-=======
 import PlayerWaitingRoom from './component/PlayerWaitingRoom'
->>>>>>> 40b7b24a4314f409d67cdf12af31d386c8b6518f
 import RoomReroute  from './component/RoomReroute'
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -16,11 +12,7 @@ import * as signalR from "@microsoft/signalr";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import {IRoom} from './component/Interfaces'
-<<<<<<< HEAD
-import '../custom.css'
-=======
 import { useNavigate  } from "react-router-dom";
->>>>>>> 40b7b24a4314f409d67cdf12af31d386c8b6518f
 
 function App() {
   
@@ -83,13 +75,8 @@ function App() {
                 console.log('Connected!');  
                 getRoomState(cookies.room)
                 connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
-<<<<<<< HEAD
-                    console.log("Received message "+ message);
-                    //RoomReroute(message)
-=======
                     console.log("Received message"+ message);
                     RoomReroute(message, naviate);
->>>>>>> 40b7b24a4314f409d67cdf12af31d386c8b6518f
                 });
             })
             .catch(e => console.log('Connection failed: ', e));
@@ -104,11 +91,7 @@ function App() {
       <header className="App-header">
         <Routes>
             <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
-<<<<<<< HEAD
-            <Route path="/startup" element={<WaitingPlayers />}/>
-=======
             <Route path="/startup" element={<PlayerWaitingRoom />}/>
->>>>>>> 40b7b24a4314f409d67cdf12af31d386c8b6518f
         </Routes>
       </header>
     </div>

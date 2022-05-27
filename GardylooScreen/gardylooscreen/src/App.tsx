@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from "react-dom";
 import SettingsMain from './component/SettingsMain'
-import StartUp from './component/StartUp'
+import WaitingPlayers from './component/Waiting'
 import RoomReroute  from './component/RoomReroute'
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -12,6 +12,7 @@ import * as signalR from "@microsoft/signalr";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
 import {IRoom} from './component/Interfaces'
+import '../custom.css'
 
 function App() {
   
@@ -73,7 +74,7 @@ function App() {
                 console.log('Connected!');  
                 getRoomState(cookies.room)
                 connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
-                    console.log("Received message"+ message);
+                    console.log("Received message "+ message);
                     //RoomReroute(message)
                 });
             })
@@ -90,7 +91,7 @@ function App() {
       <BrowserRouter>
         <Routes>
             <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
-            <Route path="/startup" element={<StartUp />}/>
+            <Route path="/startup" element={<WaitingPlayers />}/>
         </Routes>
       </BrowserRouter>
       </header>

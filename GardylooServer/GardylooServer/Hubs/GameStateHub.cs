@@ -49,8 +49,9 @@ namespace GardylooServer.Hubs
 				{
 					await _hubContext.Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString());
 
-					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
-					myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
+					if (myRoom.RoomData.state == GameStatusEnum.gamefinish)
+						myRoom.RemoveStateListener(() => UpdateClient(room));
+					//myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
 			}
 			catch (Exception ex)

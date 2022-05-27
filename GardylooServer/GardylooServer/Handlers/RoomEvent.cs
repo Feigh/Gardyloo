@@ -79,6 +79,19 @@ namespace GardylooServer.Handlers
 			}
 		}
 
+		public void RemoveStateListener(Func<Task> function)
+		{
+			try
+			{
+				_stateEvent -= function;
+
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Removing Room State Failed : " + ex.Message);
+			}
+		}
+
 		public Player AddPlayer(string name)
 		{
 			throw new NotImplementedException();
@@ -115,6 +128,7 @@ namespace GardylooServer.Handlers
 			}
 		}
 
+
 		public Room UpdateRoom(Room settings)
 		{
 			try
@@ -135,5 +149,7 @@ namespace GardylooServer.Handlers
 				throw new Exception("Update Failed : " + ex.Message);
 			}
 		}
+
+
 	}
 }

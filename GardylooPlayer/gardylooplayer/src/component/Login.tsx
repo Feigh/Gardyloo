@@ -8,9 +8,7 @@ export interface IPlayerAdd {
     Room:string;
 }
 
-function Login() {
-
-    const [player, setPlayer] = useState<IPlayerAdd>();
+function Login(player: IPlayerAdd, PlayerChange:any, RoomChange:any) {
 
     const StartRoom = () => {
         axios.post('https://localhost:44327/api/player', player)
@@ -26,10 +24,10 @@ function Login() {
             <h2 className="row justify-content-center">Gardyloo</h2>
             <div className="row mt-5 justify-content-center">
                 <div className="row">
-                    <TextBox Id="pln" Title='Player Name:' Value="stuff" Change={()=>{}} />
+                    <TextBox Id="pln" Title='Player Name:' Value={player.Name} Change={PlayerChange} />
                 </div>
                 <div className="row">
-                    <TextBox Id="ron" Title='Room Name:' Value="stuff" Change={()=>{}} />
+                    <TextBox Id="ron" Title='Room Name:' Value={player.Room} Change={RoomChange} />
                 </div>
                 <div className="row">
                     <button id="start" className="btn btn-primary btn-lg mt-4">Join Game</button>

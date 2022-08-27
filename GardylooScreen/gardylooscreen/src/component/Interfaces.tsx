@@ -38,3 +38,12 @@ export interface IEvent {
 export interface IAppData{
     roomName : string;
 }
+
+export interface IPlayer{
+    playerID : string;
+    playerName : string;
+}
+
+export interface IPlayerInfo{
+    playerList : IPlayer[];
+}

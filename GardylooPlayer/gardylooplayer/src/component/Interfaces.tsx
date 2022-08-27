@@ -4,3 +4,9 @@ export interface IRoom {
     GameStatus:string;
     PlayerList:[];
 }
+
+export interface IPlayerData {
+    id: string;
+    Name: string;
+    Room:string;
+}

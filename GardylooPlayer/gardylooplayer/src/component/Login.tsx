@@ -6,9 +6,11 @@ export interface IPlayerAdd {
     id: string;
     Name: string;
     Room:string;
+    setPlayer() : any;
+    setRoom() : any;
 }
 
-function Login(player: IPlayerAdd, PlayerChange:any, RoomChange:any) {
+function Login(player: IPlayerAdd) {
 
     const StartRoom = () => {
         axios.post('https://localhost:44327/api/player', player)
@@ -24,10 +26,10 @@ function Login(player: IPlayerAdd, PlayerChange:any, RoomChange:any) {
             <h2 className="row justify-content-center">Gardyloo</h2>
             <div className="row mt-5 justify-content-center">
                 <div className="row">
-                    <TextBox Id="pln" Title='Player Name:' Value={player.Name} Change={PlayerChange} />
+                    <TextBox Id="pln" Title='Player Name:' Value={player.Name} Change={player.setPlayer} />
                 </div>
                 <div className="row">
-                    <TextBox Id="ron" Title='Room Name:' Value={player.Room} Change={RoomChange} />
+                    <TextBox Id="ron" Title='Room Name:' Value={player.Room} Change={player.setRoom} />
                 </div>
                 <div className="row">
                     <button id="start" className="btn btn-primary btn-lg mt-4">Join Game</button>

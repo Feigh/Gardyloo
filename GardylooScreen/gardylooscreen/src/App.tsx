@@ -6,18 +6,20 @@ import RoomReroute  from './component/RoomReroute'
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+import './custom.css';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import * as signalR from "@microsoft/signalr";
 import { useCookies } from "react-cookie";
 import axios from 'axios';
-import {IRoom} from './component/Interfaces'
+import {IPlayer, IRoom} from './component/Interfaces'
 import { useNavigate  } from "react-router-dom";
 
 function App() {
   
   const [ connection, setConnection ] = useState<signalR.HubConnection>();
   const [cookies, setCookie] = useCookies(['room']);
+  const [playerlist, setPlayerList] = useState<IPlayer[]>([]);
   const naviate = useNavigate();
 
   const getNewRoom = async (): Promise<string> => {
@@ -91,7 +93,7 @@ function App() {
       <header className="App-header">
         <Routes>
             <Route path="/" element={<SettingsMain roomName={cookies.room}/>}/> 
-            <Route path="/startup" element={<PlayerWaitingRoom />}/>
+            <Route path="/startup" element={<PlayerWaitingRoom playerList={playerlist} />}/>
         </Routes>
       </header>
     </div>

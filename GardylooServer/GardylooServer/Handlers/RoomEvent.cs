@@ -94,7 +94,15 @@ namespace GardylooServer.Handlers
 
 		public Player AddPlayer(string name)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var player = _room.PlayerList.Append( new Player(name, false) );
+				return player.Last();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Adding New Player Failed : " + ex.Message);
+			}
 		}
 
 		public void AddPlayerListener(Func<string, string> player)

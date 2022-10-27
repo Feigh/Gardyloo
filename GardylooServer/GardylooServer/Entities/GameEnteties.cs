@@ -30,7 +30,7 @@ namespace GardylooServer.Entities
 		public string Name;
 		public GameSettings Settings { get; set; }
 		public GameStatusEnum state;
-		public IEnumerable<Player> PlayerList;
+		public IList<Player> PlayerList;
 
 		public Room(string name, GameSettings settings)
 		{
@@ -49,17 +49,22 @@ namespace GardylooServer.Entities
 		}
 	}
 
+	// Tydlig fungerar JSon serializer bara på properties
 	public class Player
 	{
-		public Guid id;
-		public string name;
-		public bool leader;
+		private Guid id;
+		private string name;
+		private bool leader;
+
+		public Guid Id { get => id; set => id = value; }
+		public string Name { get => name; set => name = value; }
+		public bool Leader { get => leader; set => leader = value; }
 
 		public Player(string name, bool leader)
 		{
-			this.id = Guid.NewGuid();
-			this.name = name;
-			this.leader = leader;
+			this.Id = Guid.NewGuid();
+			this.Name = name;
+			this.Leader = leader;
 		}
 	}
 
@@ -84,6 +89,7 @@ namespace GardylooServer.Entities
 		public double TimeLimit { get; set; }
 		public IList<GameTagObject> SelectedTags { get; set; }
 		public IList<GameTagObject> ExcludedTags { get; set; }
+		// lägg till att man kan välja olika state av olika state av val, om nån vinner en prompt så blir de ledare eller så slumpas det etc
 
 		public GameSettings()
 		{

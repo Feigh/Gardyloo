@@ -17,7 +17,8 @@ import { useNavigate  } from "react-router-dom";
 
 function App() {
   
-  const [ connection, setConnection ] = useState<signalR.HubConnection>();
+  const [ playerconnection, setPlayerConnection ] = useState<signalR.HubConnection>();
+  const [ stateconnection, setStateConnection ] = useState<signalR.HubConnection>();
   const [cookies, setCookie] = useCookies(['room']);
   const [playerlist, setPlayerList] = useState<IPlayer[]>([]);
   const naviate = useNavigate();
@@ -44,7 +45,10 @@ function App() {
 
   useEffect(() => {
       const hubConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/statehub").build();
-      setConnection(hubConnection);
+      setStateConnection(hubConnection);
+
+      const hubpConnection = new signalR.HubConnectionBuilder().withUrl("https://localhost:44327/playerhub").build();
+      setPlayerConnection(hubpConnection);
 
       if(cookies.room === undefined){
         CreateCookie();
@@ -62,21 +66,29 @@ function App() {
 
   const getRoomState = (room :string) =>{// bör ta in en string med rum id, så när settings har skapat ett rum då anropas getstate
     console.log("GetState " + room);
-    if (connection) { 
-    connection.invoke("GetState", room).catch(function (err) { // här så gör klienten ett anrop
+    if (stateconnection) { 
+      stateconnection.invoke("GetState", room).catch(function (err) { // här så gör klienten ett anrop
         console.error(err.toString());
     });
     }
 }
 
+const getPlayers = (room :string) =>{// bör ta in en string med rum id, så när settings har skapat ett rum då anropas getstate
+  console.log("GetPlayers " + room);
+  if (playerconnection) { 
+    playerconnection.invoke("GetPlayers", room).catch(function (err) { // här så gör klienten ett anrop
+      console.error(err.toString());
+  });
+  }
+}
+
   useEffect(() => {
 
-    if (connection) {
-        connection.start()
-            .then(result => {
-                console.log('Connected!');  
+    if (stateconnection) {
+      stateconnection.start()
+            .then(result => {  
                 getRoomState(cookies.room)
-                connection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
+                stateconnection.on('GetRoomState', message => { // här säger man att man lyssnar på connection på kanalen getroomstate, server skickar data till denna
                     console.log("Received message"+ message);
                     RoomReroute(message, naviate);
                 });
@@ -84,8 +96,20 @@ function App() {
             .catch(e => console.log('Connection failed: ', e));
     }
 
+    if (playerconnection) {
+      playerconnection.start()
+            .then(result => {
+                console.log('Connected!');  
+                getPlayers(cookies.room)
+                playerconnection.on('GetPlayersData', message => { // här säger man att man lyssnar på connection på kanalen getplayers, server skickar data till denna
+                    console.log("flupp");
+                    console.log(message);
+                });
+            })
+            .catch(e => console.log('Connection failed: ', e));
+    }
 
-}, [connection]);
+}, [stateconnection, playerconnection]);
 
   return (
     <CookiesProvider>

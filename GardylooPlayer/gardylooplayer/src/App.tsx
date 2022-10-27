@@ -12,8 +12,7 @@ function App() {
 
   return (
         <Routes>
-            <Route path="/" element={<Login Name={player.Name} Room={player.Room} id={player.id} 
-              setPlayer={setPlayer} />}/> 
+            <Route path="/" element={<Login Name={player.Name} Room={player.Room} id={player.id} setPlayer={setPlayer} setRoom={() => {}} />}/> 
         </Routes>
   );
 }

@@ -43,6 +43,7 @@ namespace GardylooServer.Controllers
 		[HttpPost]
 		public void Post([FromBody] string value)
 		{
+			var stuff = 10;
 		}
 
 		// PUT api/<PlayerController>/5

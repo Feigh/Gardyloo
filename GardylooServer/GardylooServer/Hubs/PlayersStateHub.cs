@@ -2,6 +2,7 @@
 using GardylooServer.Handlers;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,8 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomhandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					await Clients.All.SendAsync("GetPlayers", myRoom.RoomData.PlayerList.ToString()); // skicka status till klienten
+					string jsonString = JsonSerializer.Serialize(myRoom.RoomData.PlayerList);
+					await Clients.All.SendAsync("GetPlayersData", jsonString); // skicka status till klienten
 					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
 						myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
@@ -40,13 +42,13 @@ namespace GardylooServer.Hubs
 		}
 		public async Task UpdateClient(string room)
 		{
-
 			try
 			{
 				var myRoom = _roomhandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					await _hubContext.Clients.All.SendAsync("GetPlayers", myRoom.RoomData.PlayerList.ToString());
+					string jsonString = JsonSerializer.Serialize(myRoom.RoomData.PlayerList);
+					await _hubContext.Clients.All.SendAsync("GetPlayersData", jsonString);
 
 					if (myRoom.RoomData.state == GameStatusEnum.gamefinish)
 						myRoom.RemoveStateListener(() => UpdateClient(room));

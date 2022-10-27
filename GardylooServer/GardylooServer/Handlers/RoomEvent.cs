@@ -12,12 +12,14 @@ namespace GardylooServer.Handlers
 		private Room _room;
 		private readonly string _roomname;
 		private Func<Task> _stateEvent;
+		private readonly ILogger<RoomEvent> _logger;
 
 		public Room RoomData { get { return _room; } }
 		public string RoomName { get { return _room.Name; } }
 
-		public RoomEvent()
+		public RoomEvent(ILogger<RoomEvent> logger)
 		{
+			_logger = logger;
 		}
 		public RoomEvent(string name)
 		{
@@ -29,6 +31,7 @@ namespace GardylooServer.Handlers
 			try
 			{
 				_room = new Room(name, settings);
+				_room.PlayerList.Add(new Player("Bob", true));
 			}
 			catch (Exception ex)
 			{

@@ -6,8 +6,8 @@ export interface IPlayerAdd {
     id: string;
     Name: string;
     Room:string;
-    setPlayer() : any;
-    setRoom() : any;
+    setPlayer :  any;
+    setRoom : any;
 }
 
 function Login(player: IPlayerAdd) {
@@ -32,7 +32,7 @@ function Login(player: IPlayerAdd) {
                     <TextBox Id="ron" Title='Room Name:' Value={player.Room} Change={player.setRoom} />
                 </div>
                 <div className="row">
-                    <button id="start" className="btn btn-primary btn-lg mt-4">Join Game</button>
+                    <input id="start" className="btn btn-primary btn-lg mt-4" type="button" onClick={StartRoom} value="Join Game" />
                     </div>
                 </div>
             </div>

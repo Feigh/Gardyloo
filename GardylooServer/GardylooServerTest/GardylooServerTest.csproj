@@ -57,6 +57,8 @@
   <ItemGroup>
     <Folder Include="TestData\sounds\" />
     <Folder Include="TestData\prompts\" />
+    <Folder Include="Unit\GameEndTest\" />
+    <Folder Include="Unit\SetupTurnTest\" />
   </ItemGroup>
 
 </Project>

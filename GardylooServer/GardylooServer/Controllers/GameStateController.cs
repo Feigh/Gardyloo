@@ -19,10 +19,10 @@ namespace GardylooServer.Controllers
 	public class GameStateController : ControllerBase
 	{
 		private readonly ILogger<GameStateController> _logger;
-		private readonly GameHandler _gameHandler;
+		private readonly IRoomManager _gameHandler;
 		private readonly IHubContext<GameStateHub> _statehub;
 
-		public GameStateController(ILogger<GameStateController> logger, GameHandler gameHandler, IHubContext<GameStateHub> statehub)
+		public GameStateController(ILogger<GameStateController> logger, IRoomManager gameHandler, IHubContext<GameStateHub> statehub)
 		{
 			_logger = logger;
 			_gameHandler = gameHandler;

@@ -22,6 +22,8 @@ namespace GardylooServer.Entities
 	{
 		public string Id { get; set; }
 		public string Text { get; set; }
+		public string FilePath { get; set; }
+		public string FileName { get; set; }
 		public string Creator { get; set; }
 		public IEnumerable<GameTagObject> Tags { get; set; }
 	}

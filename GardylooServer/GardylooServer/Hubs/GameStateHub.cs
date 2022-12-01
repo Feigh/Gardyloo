@@ -12,9 +12,9 @@ namespace GardylooServer.Hubs
 	public class GameStateHub : Hub
 	{
 		private readonly ILogger<GameStateHub> _logger;
-		IRoomHandler<RoomEvent> _roomHandler;
+		IRoomManager _roomHandler;
 		private readonly IHubContext<GameStateHub> _hubContext;
-		public GameStateHub(ILogger<GameStateHub> logger, IRoomHandler<RoomEvent> rhandler, IHubContext<GameStateHub> hubContext)
+		public GameStateHub(ILogger<GameStateHub> logger, IRoomManager rhandler, IHubContext<GameStateHub> hubContext)
 		{
 			_logger = logger;
 			_roomHandler = rhandler;
@@ -28,9 +28,9 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					await Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString()); // skicka status till klienten
-					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
-						myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
+					await Clients.All.SendAsync("GetRoomState", myRoom.RoomEvent.RoomData.state.ToString()); // skicka status till klienten
+					if (myRoom.RoomEvent.RoomData.state != GameStatusEnum.gamefinish)
+						myRoom.RoomListener.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
 			}
 			catch (Exception ex)
@@ -47,10 +47,10 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomHandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					await _hubContext.Clients.All.SendAsync("GetRoomState", myRoom.RoomData.state.ToString());
+					await _hubContext.Clients.All.SendAsync("GetRoomState", myRoom.RoomEvent.RoomData.state.ToString());
 
-					if (myRoom.RoomData.state == GameStatusEnum.gamefinish)
-						myRoom.RemoveStateListener(() => UpdateClient(room));
+					if (myRoom.RoomEvent.RoomData.state == GameStatusEnum.gamefinish)
+						myRoom.RoomListener.RemoveStateListener(() => UpdateClient(room));
 					//myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
 			}

@@ -17,7 +17,7 @@ namespace GardylooServerTest.Integration
 	public class GameRoomControllerTest
 	{
 		private readonly GameRoomController _sut;
-		private readonly RoomHandler _handler;
+		private readonly RoomManager _handler;
 		public GameRoomControllerTest()
 		{
 			var mockLog = new Mock<ILogger<GameRoomController>>();
@@ -28,14 +28,15 @@ namespace GardylooServerTest.Integration
 				It.IsAny<Exception>(),
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
 
-			var mockhandlrLog = new Mock<ILogger<RoomHandler>>();
-			mockhandlrLog.Setup(x => x.Log<It.IsAnyType>(
+			var mockMngLog = new Mock<ILogger<RoomManager>>();
+			mockLog.Setup(x => x.Log<It.IsAnyType>(
 				It.IsAny<LogLevel>(),
 				It.IsAny<EventId>(),
 				It.IsAny<It.IsAnyType>(),
 				It.IsAny<Exception>(),
 				(Func<It.IsAnyType, Exception, string>)It.IsAny<object>()));
-			_handler = new RoomHandler(mockhandlrLog.Object);
+
+			_handler = new RoomManager(mockMngLog.Object);
 
 			var mocksetting = new Mock<IDataReader<GameSettingsObject>>();
 			mocksetting.Setup(x => x.GetItem(It.IsAny<string>())).Returns(new GameSettingsObject() { id= "8ba26130-be33-4cf6-9591-0b0cc3d26cde" });

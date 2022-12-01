@@ -50,8 +50,7 @@ IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddScoped(typeof(IDataReader<>), typeof(JsonDataReader<>));
-builder.Services.AddSingleton<IRoomHandler<RoomEvent>, RoomHandler>();
-builder.Services.AddSingleton<IGameHandler, GameHandler>();
+builder.Services.AddSingleton<IRoomManager, RoomManager>();
 
 builder.Services.AddControllers()
 	.AddJsonOptions(options =>

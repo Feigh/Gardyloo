@@ -18,11 +18,11 @@ namespace GardylooServer.Controllers
 	public class GameRoomController : ControllerBase
 	{
 		private readonly ILogger<GameRoomController> _logger;
-		private readonly IRoomHandler<RoomEvent> _roomHandler;
+		private readonly IRoomManager _roomHandler;
 		private readonly IDataReader<GameSettingsObject> _dataHandler;
 		private readonly IMapper _mapper;
 
-		public GameRoomController(ILogger<GameRoomController> logger, IRoomHandler<RoomEvent> handler, IDataReader<GameSettingsObject> settings, IMapper mapper)
+		public GameRoomController(ILogger<GameRoomController> logger, IRoomManager handler, IDataReader<GameSettingsObject> settings, IMapper mapper)
 		{
 			_logger = logger;
 			_roomHandler = handler;
@@ -35,7 +35,7 @@ namespace GardylooServer.Controllers
 		{
 			try
 			{
-				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))).RoomData));
+				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.AddRoom(_roomHandler.GenerateRoomName(), _mapper.Map<GameSettings>(_dataHandler.GetItem(""))).RoomEvent.RoomData));
 			}
 			catch (Exception ex)
 			{
@@ -54,7 +54,7 @@ namespace GardylooServer.Controllers
 				if (roomF == null)
 					return BadRequest($"Failed Finding the Requested Room {room}");
 
-				return new JsonResult(_mapper.Map<GameRoomObject>(roomF.RoomData));
+				return new JsonResult(_mapper.Map<GameRoomObject>(roomF.RoomEvent.RoomData));
 		
 			}
 			catch(Exception ex)
@@ -73,7 +73,7 @@ namespace GardylooServer.Controllers
 				var stuff = _mapper.Map<Room>(room);
 				return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.RoomList
 					.Where(x => x.RoomName==room.Name).FirstOrDefault()
-					.UpdateRoom(_mapper.Map<Room>(room))));
+					.UpdateRoomSettings(_mapper.Map<Room>(room))));
 				//return new JsonResult(_mapper.Map<GameRoomObject>(_roomHandler.UpdateRoom(_mapper.Map<Room>(room))));
 			}
 			catch (Exception ex)

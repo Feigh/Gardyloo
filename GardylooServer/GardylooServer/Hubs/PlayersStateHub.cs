@@ -13,9 +13,9 @@ namespace GardylooServer.Hubs
 	public class PlayersStateHub : Hub
 	{
 		private readonly ILogger<PlayersStateHub> _logger;
-		private readonly IRoomHandler<RoomEvent> _roomhandler;
+		private readonly IRoomManager _roomhandler;
 		private readonly IHubContext<PlayersStateHub> _hubContext;
-		public PlayersStateHub(ILogger<PlayersStateHub> logger, IRoomHandler<RoomEvent> rhandler, IHubContext<PlayersStateHub> hubContext)
+		public PlayersStateHub(ILogger<PlayersStateHub> logger, IRoomManager rhandler, IHubContext<PlayersStateHub> hubContext)
 		{
 			_logger = logger;
 			_roomhandler = rhandler;
@@ -29,10 +29,10 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomhandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					string jsonString = JsonSerializer.Serialize(myRoom.RoomData.PlayerList);
+					string jsonString = JsonSerializer.Serialize(myRoom.RoomEvent.RoomData.PlayerList);
 					await Clients.All.SendAsync("GetPlayersData", jsonString); // skicka status till klienten
-					if (myRoom.RoomData.state != GameStatusEnum.gamefinish)
-						myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
+					if (myRoom.RoomEvent.RoomData.state != GameStatusEnum.gamefinish)
+						myRoom.RoomListener.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
 			}
 			catch (Exception ex)
@@ -47,11 +47,11 @@ namespace GardylooServer.Hubs
 				var myRoom = _roomhandler.RoomList.Where(x => x.RoomName == room).FirstOrDefault();
 				if (myRoom != null)
 				{
-					string jsonString = JsonSerializer.Serialize(myRoom.RoomData.PlayerList);
+					string jsonString = JsonSerializer.Serialize(myRoom.RoomEvent.RoomData.PlayerList);
 					await _hubContext.Clients.All.SendAsync("GetPlayersData", jsonString);
 
-					if (myRoom.RoomData.state == GameStatusEnum.gamefinish)
-						myRoom.RemoveStateListener(() => UpdateClient(room));
+					if (myRoom.RoomEvent.RoomData.state == GameStatusEnum.gamefinish)
+						myRoom.RoomListener.RemoveStateListener(() => UpdateClient(room));
 					//myRoom.AddStateListener(() => UpdateClient(room));// så länge status inte är slut så länka till handler att köra denna när status ändras
 				}
 			}

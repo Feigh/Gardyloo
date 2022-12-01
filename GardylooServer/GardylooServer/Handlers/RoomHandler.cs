@@ -7,49 +7,131 @@ using System.Threading.Tasks;
 
 namespace GardylooServer.Handlers
 {
-	public class RoomHandler : IRoomHandler<RoomEvent>
+	public class RoomHandler : IRoomHandler
 	{
-		private IList<RoomEvent> _roomhandler; 
-		private readonly ILogger<RoomHandler> _logger;
+		private string _roomName;
+		private RoomEvent _roomEvent;
+		private RoomListener _roomListner;
 
-		public RoomHandler(ILogger<RoomHandler> logger)
+		public RoomHandler(string roomName, GameSettings settings)
 		{
-			_roomhandler = new List<RoomEvent>();
-			_logger = logger;
+			_roomEvent = new RoomEvent(roomName, settings);
+			_roomListner = new RoomListener();
+			_roomName = roomName;
 		}
 
-		public IList<RoomEvent> RoomList { get { return _roomhandler; } }
+		public string RoomName { get => _roomName; } 
 
-		public RoomEvent AddRoom(string name, GameSettings settings)
-		{
-			try
-			{
-				_roomhandler.Add(new RoomEvent(name, settings));
-				return _roomhandler.Last();
-			}
-			catch(Exception ex)
-			{
-				_logger.LogError("Adding New Room Failed : " + ex.Message);
-				throw new Exception("Adding New Room Failed : " + ex.Message);
-			}
+		public RoomEvent RoomEvent { get => _roomEvent; }
 
-		}
+		public RoomListener RoomListener { get => _roomListner; }
 
-		public string GenerateRoomName()
-		{
-			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			Random rnd = new Random();
-			return new string(Enumerable.Repeat(chars, 4)
-					.Select(s => s[rnd.Next(s.Length)]).ToArray());
-		}
-
-		public Room DeleteRoom(string name)
+		public Player AddPlayer(string name)
 		{
 			throw new NotImplementedException();
 		}
 
+		public Room AddRoom(string name)
+		{
+			throw new NotImplementedException();
+		}
 
-		RoomEvent IRoomHandler<RoomEvent>.DeleteRoom(string name)
+		public void CheckStatus()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DeclareWinner()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void EndGame(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Answere> GetCurrentAnswereList(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Prompt> GetCurrentPromptList(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Answere> GetTurnAnswereList(string turnId, string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public PlayerAnswere GetTurnPlayerAnswere(string turnId, string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Prompt> GetTurnPromptList(string turnId, string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Answere> ReloadPlayerAnswere(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Prompt> ReloadPrompt(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemovePlayer(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IList<Answere> SetActiveAnsweres(IList<string> answereId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Prompt SetActivePrompt(string promptId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetupNextGame()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetupNextPlayerAnsweres()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetupNextPrompt()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetupNextTurn()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void StartGame(string playerId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Player UpdatePlayer(Player player)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Room UpdateRoomSettings(Room settings)
 		{
 			throw new NotImplementedException();
 		}
